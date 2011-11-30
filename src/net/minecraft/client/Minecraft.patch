@@ -1,0 +1,20 @@
+diff --git a/minecraft/net/minecraft/client/Minecraft.java b/minecraft/net/minecraft/client/Minecraft.java
+index 043aed6..b6062f6 100644
+--- a/minecraft/net/minecraft/client/Minecraft.java
++++ b/minecraft/net/minecraft/client/Minecraft.java
+@@ -117,6 +117,7 @@ import org.lwjgl.opengl.DisplayMode;
+ import org.lwjgl.opengl.GL11;
+ import org.lwjgl.opengl.PixelFormat;
+ import org.lwjgl.util.glu.GLU;
++import com.amee.minecraft.CarbonCounter;
+ 
+ // Referenced classes of package net.minecraft.client:
+ //            MinecraftApplet
+@@ -1583,6 +1584,7 @@ public abstract class Minecraft
+                 statFileWriter.readStat(StatList.startGameStat, 1);
+                 changeWorld2(world, "Loading level");
+             }
++            CarbonCounter.init(ingameGUI);
+         }
+     }
+ 

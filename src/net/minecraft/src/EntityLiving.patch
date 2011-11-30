@@ -1,0 +1,22 @@
+diff --git a/minecraft/net/minecraft/src/EntityLiving.java b/minecraft/net/minecraft/src/EntityLiving.java
+index fde182a..158c7fa 100644
+--- a/minecraft/net/minecraft/src/EntityLiving.java
++++ b/minecraft/net/minecraft/src/EntityLiving.java
+@@ -6,6 +6,8 @@ package net.minecraft.src;
+ 
+ import java.util.*;
+ 
++import com.amee.minecraft.CarbonCounter;
++
+ // Referenced classes of package net.minecraft.src:
+ //            Entity, DataWatcher, Vec3D, World, 
+ //            Profiler, DamageSource, Material, Potion, 
+@@ -259,6 +261,8 @@ public abstract class EntityLiving extends Entity
+                 }
+ 
+             }
++            if (fire > 0)
++            	CarbonCounter.releaseFromEntity(this);
+             onEntityDeath();
+             setEntityDead();
+             for(int j = 0; j < 20; j++)

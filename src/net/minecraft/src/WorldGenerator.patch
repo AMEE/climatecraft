@@ -1,0 +1,13 @@
+diff --git a/minecraft/net/minecraft/src/WorldGenerator.java b/minecraft/net/minecraft/src/WorldGenerator.java
+index ff8a815..5dc2cac 100644
+--- a/minecraft/net/minecraft/src/WorldGenerator.java
++++ b/minecraft/net/minecraft/src/WorldGenerator.java
+@@ -12,7 +12,7 @@ import java.util.Random;
+ public abstract class WorldGenerator
+ {
+ 
+-    private final boolean field_41061_a;
++    protected final boolean field_41061_a;
+ 
+     public WorldGenerator()
+     {

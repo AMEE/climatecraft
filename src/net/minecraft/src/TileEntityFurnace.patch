@@ -1,0 +1,21 @@
+diff --git a/minecraft/net/minecraft/src/TileEntityFurnace.java b/minecraft/net/minecraft/src/TileEntityFurnace.java
+index 92196c7..60c6cd7 100644
+--- a/minecraft/net/minecraft/src/TileEntityFurnace.java
++++ b/minecraft/net/minecraft/src/TileEntityFurnace.java
+@@ -4,6 +4,8 @@
+ 
+ package net.minecraft.src;
+ 
++import com.amee.minecraft.CarbonCounter;
++
+ 
+ // Referenced classes of package net.minecraft.src:
+ //            TileEntity, IInventory, ItemStack, NBTTagCompound, 
+@@ -156,6 +158,7 @@ public class TileEntityFurnace extends TileEntity
+                     if(furnaceItemStacks[1] != null)
+                     {
+                         furnaceItemStacks[1].stackSize--;
++                        CarbonCounter.releaseFromItem(furnaceItemStacks[1].getItem());
+                         if(furnaceItemStacks[1].stackSize == 0)
+                         {
+                             furnaceItemStacks[1] = null;

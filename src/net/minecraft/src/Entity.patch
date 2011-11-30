@@ -1,0 +1,22 @@
+diff --git a/minecraft/net/minecraft/src/Entity.java b/minecraft/net/minecraft/src/Entity.java
+index bb54059..60dd852 100644
+--- a/minecraft/net/minecraft/src/Entity.java
++++ b/minecraft/net/minecraft/src/Entity.java
+@@ -64,7 +64,7 @@ public abstract class Entity
+     protected Random rand;
+     public int ticksExisted;
+     public int fireResistance;
+-    private int fire;
++    protected int fire;
+     protected boolean inWater;
+     public int heartsLife;
+     private boolean firstUpdate;
+@@ -992,7 +992,7 @@ public abstract class Entity
+         readEntityFromNBT(nbttagcompound);
+     }
+ 
+-    protected final String getEntityString()
++    public final String getEntityString()
+     {
+         return EntityList.getEntityString(this);
+     }

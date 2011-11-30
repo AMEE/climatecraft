@@ -1,0 +1,31 @@
+diff --git a/minecraft/net/minecraft/src/WorldGenTaiga2.java b/minecraft/net/minecraft/src/WorldGenTaiga2.java
+index 0617bc9..7d4d693 100644
+--- a/minecraft/net/minecraft/src/WorldGenTaiga2.java
++++ b/minecraft/net/minecraft/src/WorldGenTaiga2.java
+@@ -6,6 +6,8 @@ package net.minecraft.src;
+ 
+ import java.util.Random;
+ 
++import com.amee.minecraft.CarbonCounter;
++
+ // Referenced classes of package net.minecraft.src:
+ //            WorldGenerator, World, Block, BlockLeaves, 
+ //            BlockGrass
+@@ -84,6 +86,8 @@ public class WorldGenTaiga2 extends WorldGenerator
+                     int l5 = k5 - k;
+                     if((Math.abs(j5) != k2 || Math.abs(l5) != k2 || k2 <= 0) && !Block.opaqueCubeLookup[world.getBlockId(l4, j4, k5)])
+                     {
++                    	if (field_41061_a)
++                    		CarbonCounter.absorbIntoBlock(Block.leaves.blockID);
+                         func_41060_a(world, l4, j4, k5, Block.leaves.blockID, 1);
+                     }
+                 }
+@@ -110,6 +114,8 @@ public class WorldGenTaiga2 extends WorldGenerator
+             int i5 = world.getBlockId(i, j + k4, k);
+             if(i5 == 0 || i5 == Block.leaves.blockID)
+             {
++            	if (field_41061_a)
++            		CarbonCounter.absorbIntoBlock(Block.wood.blockID);
+                 func_41060_a(world, i, j + k4, k, Block.wood.blockID, 1);
+             }
+         }

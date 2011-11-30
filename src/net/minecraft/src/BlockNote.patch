@@ -1,0 +1,21 @@
+diff --git a/minecraft/net/minecraft/src/BlockNote.java b/minecraft/net/minecraft/src/BlockNote.java
+index 92fa17f..011a9b4 100644
+--- a/minecraft/net/minecraft/src/BlockNote.java
++++ b/minecraft/net/minecraft/src/BlockNote.java
+@@ -4,6 +4,8 @@
+ 
+ package net.minecraft.src;
+ 
++import com.amee.minecraft.CarbonCounter;
++
+ 
+ // Referenced classes of package net.minecraft.src:
+ //            BlockContainer, Material, World, TileEntityNote, 
+@@ -32,6 +34,7 @@ public class BlockNote extends BlockContainer
+             {
+                 if(flag)
+                 {
++                	CarbonCounter.releaseFromBlock(blockID);
+                     tileentitynote.triggerNote(world, i, j, k);
+                 }
+                 tileentitynote.previousRedstoneState = flag;

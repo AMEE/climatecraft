@@ -1,0 +1,38 @@
+diff --git a/minecraft/net/minecraft/src/RenderGlobal.java b/minecraft/net/minecraft/src/RenderGlobal.java
+index 139b9a4..4324038 100644
+--- a/minecraft/net/minecraft/src/RenderGlobal.java
++++ b/minecraft/net/minecraft/src/RenderGlobal.java
+@@ -10,6 +10,8 @@ import net.minecraft.client.Minecraft;
+ import org.lwjgl.opengl.ARBOcclusionQuery;
+ import org.lwjgl.opengl.GL11;
+ 
++import com.amee.minecraft.CarbonCounter;
++
+ // Referenced classes of package net.minecraft.src:
+ //            IWorldAccess, GLAllocation, RenderList, OpenGlCapsChecker, 
+ //            Tessellator, World, RenderManager, RenderBlocks, 
+@@ -793,7 +795,8 @@ public class RenderGlobal
+         Tessellator tessellator1 = Tessellator.instance;
+         GL11.glDepthMask(false);
+         GL11.glEnable(2912 /*GL_FOG*/);
+-        GL11.glColor3f(f1, f2, f3);
++        float fogColourScale = com.amee.minecraft.Atmosphere.fogColourScale();
++        GL11.glColor3f(f1*fogColourScale, f2*fogColourScale, f3*fogColourScale);
+         GL11.glCallList(glSkyList);
+         GL11.glDisable(2912 /*GL_FOG*/);
+         GL11.glDisable(3008 /*GL_ALPHA_TEST*/);
+@@ -976,11 +979,12 @@ public class RenderGlobal
+         int k = MathHelper.floor_double(d2 / 2048D);
+         d1 -= j * 2048 /*GL_EXP*/;
+         d2 -= k * 2048 /*GL_EXP*/;
+-        float f9 = (worldObj.worldProvider.getCloudHeight() - f1) + 0.33F;
++        float f9 = (worldObj.worldProvider.getCloudHeight() - f1) + 0.33F - com.amee.minecraft.Atmosphere.cloudHeightOffset();
+         float f10 = (float)(d1 * (double)f6);
+         float f11 = (float)(d2 * (double)f6);
+         tessellator.startDrawingQuads();
+-        tessellator.setColorRGBA_F(f2, f3, f4, 0.8F);
++        float cloudColourScale = com.amee.minecraft.Atmosphere.cloudColourScale();
++        tessellator.setColorRGBA_F(f2*cloudColourScale, f3*cloudColourScale, f4*cloudColourScale, 0.8F);
+         for(int l = -byte0 * i; l < byte0 * i; l += byte0)
+         {
+             for(int i1 = -byte0 * i; i1 < byte0 * i; i1 += byte0)
