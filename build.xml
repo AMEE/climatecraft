@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<project name="climatecraft" basedir=".">
+
+    <target name="setup" description="Set up all requirements">
+        <unzip src="mcp50.zip" dest="mcp"/>
+        <chmod perm="a+x">
+          <fileset dir="mcp">
+            <include name="**/*.sh"/>
+            <include name="runtime/bin/jad-osx"/>
+          </fileset>
+        </chmod>
+        <exec executable="sh" dir="mcp">
+          <arg value="updatemcp.sh"/>
+        </exec>
+        <copy todir="mcp/jars/bin">
+            <fileset dir="${user.home}/Library/Application Support/minecraft/bin"/>
+        </copy>
+        <copy todir="mcp/jars/resources">
+            <fileset dir="${user.home}/Library/Application Support/minecraft/resources"/>
+        </copy>
+        <get src="https://s3.amazonaws.com/MinecraftDownload/launcher/minecraft_server.jar" dest="mcp/jars"/>
+        <exec executable="sh" dir="mcp">
+          <arg value="decompile.sh"/>
+        </exec>
+        <get src="http://cloud.github.com/downloads/AMEE/amee-lib-java/AMEEJavaClient.1.6.jar" dest="mcp/jars/bin"/>
+        <get src="https://raw.github.com/AMEE/amee-lib-java/stable/libs/commons-logging/commons-logging.jar" dest="mcp/jars/bin"/>
+        <get src="https://raw.github.com/AMEE/amee-lib-java/stable/libs/commons-codec/commons-codec.jar" dest="mcp/jars/bin"/>
+        <get src="https://raw.github.com/AMEE/amee-lib-java/stable/libs/commons-httpclient/commons-httpclient.jar" dest="mcp/jars/bin"/>
+        <get src="https://raw.github.com/AMEE/amee-lib-java/stable/libs/joda-time-1.6.jar" dest="mcp/jars/bin"/>
+        <get src="https://raw.github.com/AMEE/amee-lib-java/stable/libs/json/org.json.jar" dest="mcp/jars/bin"/>
+    </target>
+
+    <target name="patch" description="Apply patches from mod source">
+      <patch patchfile="src/conf.patch" originalfile='mcp/conf/mcp.cfg'/>
+      <mkdir dir="mcp/src/minecraft/com"/>
+      <symlink link="mcp/src/minecraft/com/amee" resource="../../../../src/com/amee" failonerror="false"/>
+      <patch patchfile="src/net/minecraft/client/Minecraft.patch" originalfile='mcp/src/minecraft/net/minecraft/client/Minecraft.java'/>
+      <patch patchfile="src/net/minecraft/src/BlockDispenser.patch" originalfile='mcp/src/minecraft/net/minecraft/src/BlockDispenser.java'/>
+      <patch patchfile="src/net/minecraft/src/BlockFire.patch" originalfile='mcp/src/minecraft/net/minecraft/src/BlockFire.java'/>
+      <patch patchfile="src/net/minecraft/src/BlockNote.patch" originalfile='mcp/src/minecraft/net/minecraft/src/BlockNote.java'/>
+      <patch patchfile="src/net/minecraft/src/BlockPistonBase.patch" originalfile='mcp/src/minecraft/net/minecraft/src/BlockPistonBase.java'/>
+      <patch patchfile="src/net/minecraft/src/Entity.patch" originalfile='mcp/src/minecraft/net/minecraft/src/Entity.java'/>
+      <patch patchfile="src/net/minecraft/src/EntityCreeper.patch" originalfile='mcp/src/minecraft/net/minecraft/src/EntityCreeper.java'/>
+      <patch patchfile="src/net/minecraft/src/EntityLiving.patch" originalfile='mcp/src/minecraft/net/minecraft/src/EntityLiving.java'/>
+      <patch patchfile="src/net/minecraft/src/GuiIngame.patch" originalfile='mcp/src/minecraft/net/minecraft/src/GuiIngame.java'/>
+      <patch patchfile="src/net/minecraft/src/RenderGlobal.patch" originalfile='mcp/src/minecraft/net/minecraft/src/RenderGlobal.java'/>
+      <patch patchfile="src/net/minecraft/src/TileEntityFurnace.patch" originalfile='mcp/src/minecraft/net/minecraft/src/TileEntityFurnace.java'/>
+      <patch patchfile="src/net/minecraft/src/WorldGenBigTree.patch" originalfile='mcp/src/minecraft/net/minecraft/src/WorldGenBigTree.java'/>
+      <patch patchfile="src/net/minecraft/src/WorldGenerator.patch" originalfile='mcp/src/minecraft/net/minecraft/src/WorldGenerator.java'/>
+      <patch patchfile="src/net/minecraft/src/WorldGenForest.patch" originalfile='mcp/src/minecraft/net/minecraft/src/WorldGenForest.java'/>
+      <patch patchfile="src/net/minecraft/src/WorldGenTaiga2.patch" originalfile='mcp/src/minecraft/net/minecraft/src/WorldGenTaiga2.java'/>
+      <patch patchfile="src/net/minecraft/src/WorldGenTrees.patch" originalfile='mcp/src/minecraft/net/minecraft/src/WorldGenTrees.java'/>
+    </target>
+
+    <target name="build" description="Build code">
+        <exec executable="sh" dir="mcp">
+          <arg value="recompile.sh"/>
+        </exec>
+    </target>
+
+    <target name="runclient" description="Run client">
+        <exec executable="sh" dir="mcp">
+          <arg value="startclient.sh"/>
+        </exec>
+    </target>
+
+    <target name="runserver" description="Run client">
+        <exec executable="sh" dir="mcp">
+          <arg value="startserver.sh"/>
+        </exec>
+    </target>
+
+</project>
