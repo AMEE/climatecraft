@@ -1,0 +1,6 @@
+= Changelog
+
+== 0.1.0
+First open source release
+Ant build/setup system
+Works with Minecraft client 1.0.0
