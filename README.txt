@@ -10,10 +10,12 @@ Copyright: Copyright (c) 2011 AMEE UK Ltd
 
 Homepage: http://github.com/AMEE/climatecraft
 
+
 == Requirements
 
 * Java Version 6 SDK
 * Minecraft 1.0.0
+
 
 == Building from source code
 
@@ -30,6 +32,15 @@ Homepage: http://github.com/AMEE/climatecraft
 
 5) Run 'ant runclient' to run the minecraft client.
    
+
+== About the code
+
+The src/com/amee directory contains all the code which talks to AMEE and manages the
+level of carbon in the atmosphere.
+
+The src/net/minecraft directory contains a set of *patches* to the Minecraft source code
+that are applied by the above process.
+
 
 == Modifying the source code
 
