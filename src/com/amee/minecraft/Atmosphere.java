@@ -40,7 +40,7 @@ public class Atmosphere {
 	}
 
 	public static float fogColourScale() {
-		return 1.0f - pollutionRatio;
+		return 1.0f - (pollutionRatio / 2.0f);
 	}
 
 	public static float cloudHeightOffset() {
