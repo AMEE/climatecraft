@@ -28,6 +28,9 @@
         <get src="https://raw.github.com/AMEE/amee-lib-java/stable/libs/commons-httpclient/commons-httpclient.jar" dest="mcp/jars/bin"/>
         <get src="https://raw.github.com/AMEE/amee-lib-java/stable/libs/joda-time-1.6.jar" dest="mcp/jars/bin"/>
         <get src="https://raw.github.com/AMEE/amee-lib-java/stable/libs/json/org.json.jar" dest="mcp/jars/bin"/>
+        <copy todir="mcp/jars/bin" file="src/amee.properties"/>
+        <echo message="Please add your AMEE credentials to mcp/jars/bin/amee.properties."/>
+        <echo message="If you wish to develop the code, we recommend that you create a git repository under mcp/src at this point and add the sources to it."/>
     </target>
 
     <target name="patch" description="Apply patches from mod source">
