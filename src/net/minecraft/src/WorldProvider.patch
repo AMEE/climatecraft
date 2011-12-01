@@ -1,0 +1,32 @@
+diff --git a/minecraft/net/minecraft/src/WorldProvider.java b/minecraft/net/minecraft/src/WorldProvider.java
+index 978962b..3739f54 100644
+--- a/minecraft/net/minecraft/src/WorldProvider.java
++++ b/minecraft/net/minecraft/src/WorldProvider.java
+@@ -4,6 +4,7 @@
+ 
+ package net.minecraft.src;
+ 
++import com.amee.minecraft.Atmosphere;
+ 
+ // Referenced classes of package net.minecraft.src:
+ //            WorldChunkManager, ChunkProviderGenerate, World, WorldInfo, 
+@@ -128,6 +129,10 @@ public abstract class WorldProvider
+         f3 *= f2 * 0.94F + 0.06F;
+         f4 *= f2 * 0.94F + 0.06F;
+         f5 *= f2 * 0.91F + 0.09F;
++        float fogColourScale = Atmosphere.fogColourScale();
++		f3 *= fogColourScale;
++		f4 *= fogColourScale;
++		f5 *= fogColourScale;
+         return Vec3D.createVector(f3, f4, f5);
+     }
+ 
+@@ -157,7 +162,7 @@ public abstract class WorldProvider
+ 
+     public float getCloudHeight()
+     {
+-        return (float)worldObj.field_35472_c;
++        return (float)worldObj.field_35472_c + Atmosphere.cloudHeightOffset();
+     }
+ 
+     public boolean func_28112_c()

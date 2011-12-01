@@ -1,0 +1,37 @@
+diff --git a/minecraft/net/minecraft/src/World.java b/minecraft/net/minecraft/src/World.java
+index dd77927..e557ba3 100644
+--- a/minecraft/net/minecraft/src/World.java
++++ b/minecraft/net/minecraft/src/World.java
+@@ -6,6 +6,8 @@ package net.minecraft.src;
+ 
+ import java.io.PrintStream;
+ import java.util.*;
++import com.amee.minecraft.Atmosphere;
++
+ 
+ // Referenced classes of package net.minecraft.src:
+ //            IBlockAccess, WorldProvider, WorldInfo, MapStorage, 
+@@ -1341,6 +1343,11 @@ public class World
+             f5 = f5 * (1.0F - f12) + 0.8F * f12;
+             f6 = f6 * (1.0F - f12) + 1.0F * f12;
+         }
++        float fogColourScale = Atmosphere.fogColourScale();
++		f4 *= fogColourScale;
++		f5 *= fogColourScale;
++		f6 *= fogColourScale;
++
+         return Vec3D.createVector(f4, f5, f6);
+     }
+ 
+@@ -1396,6 +1403,11 @@ public class World
+             f4 = f4 * f11 + f10 * (1.0F - f11);
+             f5 = f5 * f11 + f10 * (1.0F - f11);
+         }
++		// Apply pollution
++        float cloudColourScale = Atmosphere.cloudColourScale();
++		f3 *= cloudColourScale;
++		f4 *= cloudColourScale;
++		f5 *= cloudColourScale;
+         return Vec3D.createVector(f3, f4, f5);
+     }
+ 
