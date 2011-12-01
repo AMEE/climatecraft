@@ -131,7 +131,6 @@ public class CarbonCounter {
 		try {
 			profile = AmeeObjectFactory.getInstance().addProfile();
 		} catch (AmeeException e) {
-			// TODO Auto-generated catch block
 			throw new RuntimeException("Problem connecting to AMEE");
 		}
 	}
