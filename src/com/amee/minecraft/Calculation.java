@@ -21,7 +21,7 @@ public class Calculation {
 	private Float cachedResult;
 	private List<String> parameters;
 	private String name;
-	
+
 	public Calculation(String _name, String _path, List<String> _drills, List<String> _parameters)
 	{
 		name = _name;
@@ -29,7 +29,7 @@ public class Calculation {
 		path = _path;
 		drills = _drills;
 	}
-	
+
 	public AmeeDataItem dataItem() {
 		if (dataItem == null)
 		{
@@ -48,7 +48,7 @@ public class Calculation {
 		}
 		return dataItem;
 	}
-	
+
 	public AmeeProfileCategory profileCategory() {
 		if (profileCategory == null)
 		{
@@ -60,34 +60,34 @@ public class Calculation {
 		}
 		return profileCategory;
 	}
-	
+
 	public void calculate()
 	{
 		new CalculationThread(this).run(); 
 	}
-	
+
 	public void blockingCalculate() {
 		if (cachedResult == null) {
-	   		List<Choice> values = new ArrayList<Choice>();
+			List<Choice> values = new ArrayList<Choice>();
 			for (int i=0; i<parameters.size(); i+=2)
 			{
 				values.add(new Choice(parameters.get(i), parameters.get(i+1)));
 			}
-	 	    values.add(new Choice("name", name + "-" + UUID.randomUUID().toString()));
-	 	    try {
-	 		    // Get category
-	 		    AmeeProfileItem profileItem = profileCategory().addProfileItem(dataItem().getUid(), values);
-	 		    cachedResult = new Float(profileItem.getAmount().floatValue()); 
-	 	    } catch (AmeeException e) {
-	 	    	throw new RuntimeException("Problem creating profile item!");
-	 	    }		
+			values.add(new Choice("name", name + "-" + UUID.randomUUID().toString()));
+			try {
+				// Get category
+				AmeeProfileItem profileItem = profileCategory().addProfileItem(dataItem().getUid(), values);
+				cachedResult = new Float(profileItem.getAmount().floatValue()); 
+			} catch (AmeeException e) {
+				throw new RuntimeException("Problem creating profile item!");
+			}		
 		}
 		Atmosphere.addToTotal(cachedResult);
 	}
-	
+
 	public String name()
 	{
 		return name;
 	}
-	
+
 }

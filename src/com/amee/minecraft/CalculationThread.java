@@ -10,12 +10,12 @@ import com.amee.client.util.Choice;
 
 public class CalculationThread implements Runnable {
 
-	   private Calculation item;
-	   
-	   public CalculationThread(Calculation _item) {
-	       item = _item;
-	   }
-	   public void run() {
-		   item.blockingCalculate();
-	   }
+	private Calculation item;
+
+	public CalculationThread(Calculation _item) {
+		item = _item;
 	}
+	public void run() {
+		item.blockingCalculate();
+	}
+}
