@@ -7,6 +7,8 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
+import java.io.*;
+import java.util.Properties;
 
 import net.minecraft.src.Block;
 import net.minecraft.src.Entity;
@@ -124,9 +126,15 @@ public class CarbonCounter {
 		ui = _ui;
 		Atmosphere.init();
 		// Connect to AMEE
-		AmeeContext.getInstance().setUsername("minecraft");
-		AmeeContext.getInstance().setPassword("8dzfty25");
-		AmeeContext.getInstance().setBaseUrl("http://live.amee.com");
+		Properties configFile = new Properties();
+		try {
+			configFile.load(new FileInputStream("amee.properties"));
+		} catch (java.io.IOException e) {
+			throw new RuntimeException("Couldn't load amee.properties");
+		}
+		AmeeContext.getInstance().setUsername(configFile.getProperty("USERNAME"));
+		AmeeContext.getInstance().setPassword(configFile.getProperty("PASSWORD"));
+		AmeeContext.getInstance().setBaseUrl("http://" + configFile.getProperty("SERVER"));
 		// Create a profile - later on this will be stored with the world somehow
 		try {
 			profile = AmeeObjectFactory.getInstance().addProfile();
