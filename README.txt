@@ -13,6 +13,7 @@ Homepage: http://github.com/AMEE/climatecraft
 == Requirements
 
 * Java Version 6 SDK
+* Minecraft 1.0.0
 
 == Building from source code
 
