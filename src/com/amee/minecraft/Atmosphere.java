@@ -15,7 +15,7 @@ public class Atmosphere {
 	public static void addToTotal(float value)
 	{
 		total += value;
-		pollutionRatio = total / 1000.0f;
+		updatePollutionRatio();
 	}
 
 	private static void updatePollutionRatio() {
