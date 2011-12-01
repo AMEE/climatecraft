@@ -1,4 +1,5 @@
-== ClimateCraft
+ClimateCraft
+============
 
 A minecraft mod that adds carbon emission tracking using AMEEconnect (http://www.amee.com)
 
@@ -11,29 +12,32 @@ Copyright: Copyright (c) 2011 AMEE UK Ltd
 Homepage: http://github.com/AMEE/climatecraft
 
 
-== Requirements
+Requirements
+------------
 
 * Java Version 6 SDK
 * Minecraft 1.0.0
 
 
-== Building from source code
+Building from source code
+-------------------------
 
-1) Download MCP 5.0 from http://mcp.ocean-labs.de/index.php/MCP_Releases and put
+1. Download MCP 5.0 from http://mcp.ocean-labs.de/index.php/MCP_Releases and put
    it in the same directory as this file.
-
-2) Run 'ant setup'. This will unpack and intialise MCP ready to apply the mod,
+   
+2. Run 'ant setup'. This will unpack and intialise MCP ready to apply the mod,
    and download required dependencies for the new code.
 
-3) Run 'ant patch'. This will add the climatecraft source code into the code 
+3. Run 'ant patch'. This will add the climatecraft source code into the code 
    extracted by MCP.
 
-4) Run 'ant build' to compile the code.
+4. Run 'ant build' to compile the code.
 
-5) Run 'ant runclient' to run the minecraft client.
+5. Run 'ant runclient' to run the minecraft client.
    
 
-== About the code
+About the code
+--------------
 
 The src/com/amee directory contains all the code which talks to AMEE and manages the
 level of carbon in the atmosphere.
@@ -42,7 +46,8 @@ The src/net/minecraft directory contains a set of *patches* to the Minecraft sou
 that are applied by the above process.
 
 
-== Modifying the source code
+Modifying the source code
+-------------------------
 
 Changes to the Minecraft source are stored in patches to avoid copyright issues.
 
