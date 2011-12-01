@@ -10,6 +10,9 @@ Copyright: Copyright (c) 2011 AMEE UK Ltd
 
 Homepage: http://github.com/AMEE/climatecraft
 
+== Requirements
+
+* Java Version 6 SDK
 
 == Building from source code
 
