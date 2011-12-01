@@ -26,7 +26,7 @@ index 139b9a4..4324038 100644
          d1 -= j * 2048 /*GL_EXP*/;
          d2 -= k * 2048 /*GL_EXP*/;
 -        float f9 = (worldObj.worldProvider.getCloudHeight() - f1) + 0.33F;
-+        float f9 = (worldObj.worldProvider.getCloudHeight() - f1) + 0.33F - com.amee.minecraft.Atmosphere.cloudHeightOffset();
++        float f9 = (worldObj.worldProvider.getCloudHeight() - f1) + 0.33F + com.amee.minecraft.Atmosphere.cloudHeightOffset();
          float f10 = (float)(d1 * (double)f6);
          float f11 = (float)(d2 * (double)f6);
          tessellator.startDrawingQuads();
