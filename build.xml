@@ -43,13 +43,14 @@
       <patch patchfile="src/net/minecraft/src/EntityCreeper.patch" originalfile='mcp/src/minecraft/net/minecraft/src/EntityCreeper.java'/>
       <patch patchfile="src/net/minecraft/src/EntityLiving.patch" originalfile='mcp/src/minecraft/net/minecraft/src/EntityLiving.java'/>
       <patch patchfile="src/net/minecraft/src/GuiIngame.patch" originalfile='mcp/src/minecraft/net/minecraft/src/GuiIngame.java'/>
-      <patch patchfile="src/net/minecraft/src/RenderGlobal.patch" originalfile='mcp/src/minecraft/net/minecraft/src/RenderGlobal.java'/>
       <patch patchfile="src/net/minecraft/src/TileEntityFurnace.patch" originalfile='mcp/src/minecraft/net/minecraft/src/TileEntityFurnace.java'/>
+      <patch patchfile="src/net/minecraft/src/World.patch" originalfile='mcp/src/minecraft/net/minecraft/src/World.java'/>
       <patch patchfile="src/net/minecraft/src/WorldGenBigTree.patch" originalfile='mcp/src/minecraft/net/minecraft/src/WorldGenBigTree.java'/>
       <patch patchfile="src/net/minecraft/src/WorldGenerator.patch" originalfile='mcp/src/minecraft/net/minecraft/src/WorldGenerator.java'/>
       <patch patchfile="src/net/minecraft/src/WorldGenForest.patch" originalfile='mcp/src/minecraft/net/minecraft/src/WorldGenForest.java'/>
       <patch patchfile="src/net/minecraft/src/WorldGenTaiga2.patch" originalfile='mcp/src/minecraft/net/minecraft/src/WorldGenTaiga2.java'/>
       <patch patchfile="src/net/minecraft/src/WorldGenTrees.patch" originalfile='mcp/src/minecraft/net/minecraft/src/WorldGenTrees.java'/>
+      <patch patchfile="src/net/minecraft/src/WorldProvider.patch" originalfile='mcp/src/minecraft/net/minecraft/src/WorldProvider.java'/>
     </target>
 
     <target name="build" description="Build code">
