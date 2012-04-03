@@ -77,6 +77,21 @@ public class CarbonCounter {
 			Arrays.asList("fuel", "other primary solid biomass fuels", "context", "residential"),
 			Arrays.asList("mass", "-1.0", "massUnit", "kg"))
 			);
+		calculations.put("crops-", new Calculation("crops", 
+			"business/energy/stationaryCombustion", 
+			Arrays.asList("fuel", "other primary solid biomass fuels", "context", "residential"),
+			Arrays.asList("mass", "-0.25", "massUnit", "kg"))
+			);
+		calculations.put("cactus", new Calculation("cactus", 
+			"business/energy/stationaryCombustion", 
+			Arrays.asList("fuel", "other primary solid biomass fuels", "context", "residential"),
+			Arrays.asList("mass", "4.0", "massUnit", "kg"))
+			);
+		calculations.put("cactus-", new Calculation("cactus", 
+			"business/energy/stationaryCombustion", 
+			Arrays.asList("fuel", "other primary solid biomass fuels", "context", "residential"),
+			Arrays.asList("mass", "-4.0", "massUnit", "kg"))
+			);
 		calculations.put("pig", new Calculation("pig", 
 			"business/waste/combustion/municipal", 
 			Arrays.asList("type", "food waste", "method", "open burning", "technology", "none"),
@@ -207,6 +222,8 @@ public class CarbonCounter {
 		Calculation calculation = null;
 		if 		(blockID == Block.wood.blockID) 	calculation = calculations.get("wood-");
 		else if (blockID == Block.leaves.blockID) 	calculation = calculations.get("leaf-");
+		else if (blockID == Block.cactus.blockID) 	calculation = calculations.get("cactus-");
+		else if (blockID == Block.crops.blockID) 	calculation = calculations.get("crops-");
 		// Do it
 		if (calculation != null) 
 		{
