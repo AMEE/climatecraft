@@ -1,4 +1,4 @@
-package com.amee.minecraft;
+package com.amee.climatecraft;
 
 import java.text.DecimalFormat;
 

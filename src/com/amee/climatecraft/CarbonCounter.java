@@ -1,4 +1,4 @@
-package com.amee.minecraft;
+package com.amee.climatecraft;
 
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
@@ -10,10 +10,10 @@ import java.util.UUID;
 import java.io.*;
 import java.util.Properties;
 
-import net.minecraft.src.Block;
-import net.minecraft.src.Entity;
-import net.minecraft.src.EntityPlayer;
-import net.minecraft.src.Item;
+//import net.minecraft.src.Block;
+//import net.minecraft.src.Entity;
+//import net.minecraft.src.EntityPlayer;
+//import net.minecraft.src.Item;
 
 import com.amee.client.AmeeException;
 import com.amee.client.service.*;
@@ -27,9 +27,9 @@ public class CarbonCounter {
 
 	private static HashMap<String,Calculation> calculations = new HashMap<String,Calculation>(); 
 
-	private static EntityPlayer player;
+	//private static EntityPlayer player;
 
-	public static void init(EntityPlayer _player)
+	public static void init(/*EntityPlayer _player*/)
 	{
 		// Create mappings
 		calculations.put("coal", new Calculation("coal", 
@@ -138,7 +138,7 @@ public class CarbonCounter {
 			Arrays.asList("energyUsed", "1.0", "energyUsedUnit", "kWh"))
 			);
 		// Initialise members
-		player = _player;
+		//player = _player;
 		Atmosphere.init();
 		// Connect to AMEE
 		Properties configFile = new Properties();
@@ -167,12 +167,12 @@ public class CarbonCounter {
 	{
 		// Get item
 		Calculation calculation = null;
-		if 		(blockID == Block.wood.blockID) 	  		calculation = calculations.get("wood");
-		else if (blockID == Block.leaves.blockID) 	  		calculation = calculations.get("leaf");
-		else if (blockID == Block.pistonBase.blockID) 		calculation = calculations.get("piston");
-		else if (blockID == Block.pistonStickyBase.blockID) calculation = calculations.get("piston");
-		else if (blockID == Block.dispenser.blockID)  		calculation = calculations.get("dispenser");
-		else if (blockID == Block.music.blockID)      		calculation = calculations.get("note");
+//		if 		(blockID == Block.wood.blockID) 	  		calculation = calculations.get("wood");
+//		else if (blockID == Block.leaves.blockID) 	  		calculation = calculations.get("leaf");
+//		else if (blockID == Block.pistonBase.blockID) 		calculation = calculations.get("piston");
+//		else if (blockID == Block.pistonStickyBase.blockID) calculation = calculations.get("piston");
+//		else if (blockID == Block.dispenser.blockID)  		calculation = calculations.get("dispenser");
+//		else if (blockID == Block.music.blockID)      		calculation = calculations.get("note");
 		// Do it
 		if (calculation != null) 
 		{
@@ -181,11 +181,11 @@ public class CarbonCounter {
 	}
 
 	// Entities release carbon when they are set on fire
-	public static void releaseFromEntity(Entity entity)
+	public static void releaseFromEntity(/* Entity entity */)
 	{
 		// Get item
 		Calculation calculation = null;
-		calculation = calculations.get(entity.getEntityString().toLowerCase());
+		calculation = calculations.get("");//entity.getEntityString().toLowerCase());
 		// Do it
 		if (calculation != null) 
 		{
@@ -194,11 +194,11 @@ public class CarbonCounter {
 	}
 
 	// Items release carbon when they burn in furnaces
-	public static void releaseFromItem(Item item)
+	public static void releaseFromItem(/* Item item */)
 	{
 		// Get item
 		Calculation calculation = null;
-		String name = item.getUnlocalizedName();
+		String name = "";//item.getUnlocalizedName();
 		if 		(name.equals("item.stick")) 	calculation = calculations.get("stick");
 		else if (name.equals("tile.sapling")) 	calculation = calculations.get("leaf");
 		else if (name.equals("tile.log")) 		calculation = calculations.get("wood");
@@ -211,7 +211,7 @@ public class CarbonCounter {
 		}
 		else 
 		{
-			player.addChatMessage("unknown item: " + name);
+//			player.addChatMessage("unknown item: " + name);
 		}
 	}
 
@@ -220,10 +220,10 @@ public class CarbonCounter {
 	{
 		// Get item
 		Calculation calculation = null;
-		if 		(blockID == Block.wood.blockID) 	calculation = calculations.get("wood-");
-		else if (blockID == Block.leaves.blockID) 	calculation = calculations.get("leaf-");
-		else if (blockID == Block.cactus.blockID) 	calculation = calculations.get("cactus-");
-		else if (blockID == Block.crops.blockID) 	calculation = calculations.get("crops-");
+//		if 		(blockID == Block.wood.blockID) 	calculation = calculations.get("wood-");
+//		else if (blockID == Block.leaves.blockID) 	calculation = calculations.get("leaf-");
+//		else if (blockID == Block.cactus.blockID) 	calculation = calculations.get("cactus-");
+//		else if (blockID == Block.crops.blockID) 	calculation = calculations.get("crops-");
 		// Do it
 		if (calculation != null) 
 		{
