@@ -35,7 +35,7 @@
           <arg value="-m"/>
           <arg value="'mojang sources'"/>
         </exec>
-        <get src="http://cloud.github.com/downloads/AMEE/amee-lib-java/AMEEJavaClient.1.6.jar" dest="mcp/lib"/>
+        <symlink link="mcp/lib/AMEEJavaClient.1.6.jar" resource="../../lib/AMEEJavaClient.1.6.jar" failonerror="false"/>      
         <get src="https://raw.github.com/AMEE/amee-lib-java/stable/libs/commons-logging/commons-logging.jar" dest="mcp/lib"/>
         <get src="https://raw.github.com/AMEE/amee-lib-java/stable/libs/commons-codec/commons-codec.jar" dest="mcp/lib"/>
         <get src="https://raw.github.com/AMEE/amee-lib-java/stable/libs/commons-httpclient/commons-httpclient.jar" dest="mcp/lib"/>
