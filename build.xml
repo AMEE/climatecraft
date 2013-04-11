@@ -46,7 +46,6 @@
     </target>
 
     <target name="patch" description="Apply patches to MCP source">
-      <patch patchfile="src/conf.patch" originalfile='mcp/conf/mcp.cfg'/>
       <mkdir dir="mcp/src/minecraft/com"/>
       <symlink link="mcp/src/minecraft/com/amee" resource="../../../../src/com/amee" failonerror="false"/>
       <patch patchfile="src/mcp.patch" strip='1' dir='mcp/src'/>
