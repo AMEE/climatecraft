@@ -23,6 +23,19 @@
         <exec executable="sh" dir="mcp">
           <arg value="decompile.sh"/>
         </exec>
+        <exec executable="git" dir="mcp/src">
+          <arg value="init"/>
+          <arg value="."/>
+        </exec>
+        <exec executable="git" dir="mcp/src">
+          <arg value="add"/>
+          <arg value="-A"/>
+        </exec>
+        <exec executable="git" dir="mcp/src">
+          <arg value="commit"/>
+          <arg value="-m"/>
+          <arg value="'mojang sources'"/>
+        </exec>
         <get src="http://cloud.github.com/downloads/AMEE/amee-lib-java/AMEEJavaClient.1.6.jar" dest="mcp/lib"/>
         <get src="https://raw.github.com/AMEE/amee-lib-java/stable/libs/commons-logging/commons-logging.jar" dest="mcp/lib"/>
         <get src="https://raw.github.com/AMEE/amee-lib-java/stable/libs/commons-codec/commons-codec.jar" dest="mcp/lib"/>
@@ -31,7 +44,6 @@
         <get src="https://raw.github.com/AMEE/amee-lib-java/stable/libs/json/org.json.jar" dest="mcp/lib"/>
         <copy todir="mcp/jars" file="src/amee.properties"/>
         <echo message="Please add your AMEE credentials to mcp/jars/amee.properties."/>
-        <echo message="If you wish to develop the code, we recommend that you create a git repository under mcp/src at this point and add the sources to it."/>
     </target>
 
     <target name="patch" description="Apply patches to MCP source">
