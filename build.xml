@@ -38,23 +38,7 @@
       <patch patchfile="src/conf.patch" originalfile='mcp/conf/mcp.cfg'/>
       <mkdir dir="mcp/src/minecraft/com"/>
       <symlink link="mcp/src/minecraft/com/amee" resource="../../../../src/com/amee" failonerror="false"/>
-      <patch patchfile="src/net/minecraft/client/Minecraft.patch" originalfile='mcp/src/minecraft/net/minecraft/client/Minecraft.java'/>
-      <patch patchfile="src/net/minecraft/src/BlockDispenser.patch" originalfile='mcp/src/minecraft/net/minecraft/src/BlockDispenser.java'/>
-      <patch patchfile="src/net/minecraft/src/BlockFire.patch" originalfile='mcp/src/minecraft/net/minecraft/src/BlockFire.java'/>
-      <patch patchfile="src/net/minecraft/src/BlockNote.patch" originalfile='mcp/src/minecraft/net/minecraft/src/BlockNote.java'/>
-      <patch patchfile="src/net/minecraft/src/BlockPistonBase.patch" originalfile='mcp/src/minecraft/net/minecraft/src/BlockPistonBase.java'/>
-      <patch patchfile="src/net/minecraft/src/Entity.patch" originalfile='mcp/src/minecraft/net/minecraft/src/Entity.java'/>
-      <patch patchfile="src/net/minecraft/src/EntityCreeper.patch" originalfile='mcp/src/minecraft/net/minecraft/src/EntityCreeper.java'/>
-      <patch patchfile="src/net/minecraft/src/EntityLiving.patch" originalfile='mcp/src/minecraft/net/minecraft/src/EntityLiving.java'/>
-      <patch patchfile="src/net/minecraft/src/GuiIngame.patch" originalfile='mcp/src/minecraft/net/minecraft/src/GuiIngame.java'/>
-      <patch patchfile="src/net/minecraft/src/TileEntityFurnace.patch" originalfile='mcp/src/minecraft/net/minecraft/src/TileEntityFurnace.java'/>
-      <patch patchfile="src/net/minecraft/src/World.patch" originalfile='mcp/src/minecraft/net/minecraft/src/World.java'/>
-      <patch patchfile="src/net/minecraft/src/WorldGenBigTree.patch" originalfile='mcp/src/minecraft/net/minecraft/src/WorldGenBigTree.java'/>
-      <patch patchfile="src/net/minecraft/src/WorldGenerator.patch" originalfile='mcp/src/minecraft/net/minecraft/src/WorldGenerator.java'/>
-      <patch patchfile="src/net/minecraft/src/WorldGenForest.patch" originalfile='mcp/src/minecraft/net/minecraft/src/WorldGenForest.java'/>
-      <patch patchfile="src/net/minecraft/src/WorldGenTaiga2.patch" originalfile='mcp/src/minecraft/net/minecraft/src/WorldGenTaiga2.java'/>
-      <patch patchfile="src/net/minecraft/src/WorldGenTrees.patch" originalfile='mcp/src/minecraft/net/minecraft/src/WorldGenTrees.java'/>
-      <patch patchfile="src/net/minecraft/src/WorldProvider.patch" originalfile='mcp/src/minecraft/net/minecraft/src/WorldProvider.java'/>
+      <patch patchfile="src/mcp.patch" strip='1' dir='mcp/src'/>
     </target>
 
     <target name="build" description="Build code">

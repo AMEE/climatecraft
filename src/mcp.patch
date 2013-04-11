@@ -1,0 +1,339 @@
+diff --git a/minecraft/net/minecraft/src/BlockDispenser.java b/minecraft/net/minecraft/src/BlockDispenser.java
+index 7dfba99..fe286a0 100644
+--- a/minecraft/net/minecraft/src/BlockDispenser.java
++++ b/minecraft/net/minecraft/src/BlockDispenser.java
+@@ -1,6 +1,7 @@
+ package net.minecraft.src;
+ 
+ import java.util.Random;
++import com.amee.minecraft.CarbonCounter;
+ 
+ public class BlockDispenser extends BlockContainer {
+    public static final IRegistry dispenseBehaviorRegistry = new RegistryDefaulted(new BehaviorDefaultDispenseItem());
+@@ -83,6 +84,7 @@ public class BlockDispenser extends BlockContainer {
+          if(var7 < 0) {
+             par1World.playAuxSFX(1001, par2, par3, par4, 0);
+          } else {
++           	CarbonCounter.releaseFromBlock(blockID);
+             ItemStack var8 = var6.getStackInSlot(var7);
+             IBehaviorDispenseItem var9 = this.getBehaviorForItemStack(var8);
+             if(var9 != IBehaviorDispenseItem.itemDispenseBehaviorProvider) {
+diff --git a/minecraft/net/minecraft/src/BlockFire.java b/minecraft/net/minecraft/src/BlockFire.java
+index f1b469e..e967e63 100644
+--- a/minecraft/net/minecraft/src/BlockFire.java
++++ b/minecraft/net/minecraft/src/BlockFire.java
+@@ -1,6 +1,7 @@
+ package net.minecraft.src;
+ 
+ import java.util.Random;
++import com.amee.minecraft.CarbonCounter;
+ 
+ public class BlockFire extends Block {
+    private int[] chanceToEncourageFire = new int[256];
+@@ -140,7 +141,8 @@ public class BlockFire extends Block {
+    private void tryToCatchBlockOnFire(World par1World, int par2, int par3, int par4, int par5, Random par6Random, int par7) {
+       int var8 = this.abilityToCatchFire[par1World.getBlockId(par2, par3, par4)];
+       if(par6Random.nextInt(par5) < var8) {
+-         boolean var9 = par1World.getBlockId(par2, par3, par4) == Block.tnt.blockID;
++         Integer blockBeingDestroyed = par1World.getBlockId(par2, par3, par4);
++         boolean var9 = blockBeingDestroyed == Block.tnt.blockID;
+          if(par6Random.nextInt(par7 + 10) < 5 && !par1World.canLightningStrikeAt(par2, par3, par4)) {
+             int var10 = par7 + par6Random.nextInt(5) / 4;
+             if(var10 > 15) {
+@@ -155,6 +157,8 @@ public class BlockFire extends Block {
+          if(var9) {
+             Block.tnt.onBlockDestroyedByPlayer(par1World, par2, par3, par4, 1);
+          }
++         // BURN BABY BURN
++         CarbonCounter.releaseFromBlock(blockBeingDestroyed);
+       }
+    }
+ 
+diff --git a/minecraft/net/minecraft/src/BlockNote.java b/minecraft/net/minecraft/src/BlockNote.java
+index 8d13100..845e56f 100644
+--- a/minecraft/net/minecraft/src/BlockNote.java
++++ b/minecraft/net/minecraft/src/BlockNote.java
+@@ -1,5 +1,7 @@
+ package net.minecraft.src;
+ 
++import com.amee.minecraft.CarbonCounter;
++
+ public class BlockNote extends BlockContainer {
+    public BlockNote(int par1) {
+       super(par1, Material.wood);
+@@ -11,6 +13,7 @@ public class BlockNote extends BlockContainer {
+       TileEntityNote var7 = (TileEntityNote)par1World.getBlockTileEntity(par2, par3, par4);
+       if(var7 != null && var7.previousRedstoneState != var6) {
+          if(var6) {
++            CarbonCounter.releaseFromBlock(blockID);
+             var7.triggerNote(par1World, par2, par3, par4);
+          }
+ 
+diff --git a/minecraft/net/minecraft/src/BlockPistonBase.java b/minecraft/net/minecraft/src/BlockPistonBase.java
+index fcc9979..c9c4b67 100644
+--- a/minecraft/net/minecraft/src/BlockPistonBase.java
++++ b/minecraft/net/minecraft/src/BlockPistonBase.java
+@@ -1,6 +1,7 @@
+ package net.minecraft.src;
+ 
+ import java.util.List;
++import com.amee.minecraft.CarbonCounter;
+ 
+ public class BlockPistonBase extends Block {
+    private final boolean isSticky;
+@@ -369,7 +370,8 @@ public class BlockPistonBase extends Block {
+             var6 = var14;
+             var7 = var15;
+          }
+-
++         
++         CarbonCounter.releaseFromBlock(blockID);
+          return true;
+       }
+    }
+diff --git a/minecraft/net/minecraft/src/Entity.java b/minecraft/net/minecraft/src/Entity.java
+index 249eb03..89d12f9 100644
+--- a/minecraft/net/minecraft/src/Entity.java
++++ b/minecraft/net/minecraft/src/Entity.java
+@@ -54,7 +54,7 @@ public abstract class Entity {
+    protected Random rand;
+    public int ticksExisted;
+    public int fireResistance;
+-   private int fire;
++   protected int fire;
+    protected boolean inWater;
+    public int hurtResistantTime;
+    private boolean firstUpdate;
+diff --git a/minecraft/net/minecraft/src/EntityCreeper.java b/minecraft/net/minecraft/src/EntityCreeper.java
+index 7195935..66c243d 100644
+--- a/minecraft/net/minecraft/src/EntityCreeper.java
++++ b/minecraft/net/minecraft/src/EntityCreeper.java
+@@ -1,5 +1,7 @@
+ package net.minecraft.src;
+ 
++import com.amee.minecraft.CarbonCounter;
++
+ public class EntityCreeper extends EntityMob {
+    private int lastActiveTime;
+    private int timeSinceIgnited;
+@@ -90,7 +92,7 @@ public class EntityCreeper extends EntityMob {
+                } else {
+                   this.worldObj.createExplosion(this, this.posX, this.posY, this.posZ, (float)this.explosionRadius, var2);
+                }
+-
++               CarbonCounter.releaseFromEntity(this);
+                this.setDead();
+             }
+          }
+diff --git a/minecraft/net/minecraft/src/EntityLiving.java b/minecraft/net/minecraft/src/EntityLiving.java
+index a034641..d0dc137 100644
+--- a/minecraft/net/minecraft/src/EntityLiving.java
++++ b/minecraft/net/minecraft/src/EntityLiving.java
+@@ -402,6 +402,8 @@ public abstract class EntityLiving extends Entity {
+             }
+          }
+ 
++         if (fire > 0)
++           CarbonCounter.releaseFromEntity(this);
+          this.setDead();
+ 
+          for(var1 = 0; var1 < 20; ++var1) {
+diff --git a/minecraft/net/minecraft/src/GuiIngame.java b/minecraft/net/minecraft/src/GuiIngame.java
+index 76ed758..9127d7b 100644
+--- a/minecraft/net/minecraft/src/GuiIngame.java
++++ b/minecraft/net/minecraft/src/GuiIngame.java
+@@ -9,6 +9,8 @@ import net.minecraft.client.Minecraft;
+ import org.lwjgl.opengl.GL11;
+ import org.lwjgl.opengl.GL12;
+ 
++import com.amee.minecraft.CarbonCounter;
++
+ public class GuiIngame extends Gui {
+    private static final RenderItem itemRenderer = new RenderItem();
+    private final Random rand = new Random();
+@@ -369,6 +371,9 @@ public class GuiIngame extends Gui {
+          this.drawString(var8, String.format("ws: %.3f, fs: %.3f, g: %b, fl: %d", new Object[]{Float.valueOf(this.mc.thePlayer.capabilities.getWalkSpeed()), Float.valueOf(this.mc.thePlayer.capabilities.getFlySpeed()), Boolean.valueOf(this.mc.thePlayer.onGround), Integer.valueOf(this.mc.theWorld.getHeightValue(var47, var23))}), 2, 104, 14737632);
+          GL11.glPopMatrix();
+          this.mc.mcProfiler.endSection();
++      } else
++      {
++         var8.drawStringWithShadow("CO2: " + com.amee.minecraft.Atmosphere.totalAsString(), 2, 2, 0xffffff);
+       }
+ 
+       if(this.recordPlayingUpFor > 0) {
+diff --git a/minecraft/net/minecraft/src/TileEntityFurnace.java b/minecraft/net/minecraft/src/TileEntityFurnace.java
+index 88d3fd0..bd71f24 100644
+--- a/minecraft/net/minecraft/src/TileEntityFurnace.java
++++ b/minecraft/net/minecraft/src/TileEntityFurnace.java
+@@ -1,5 +1,7 @@
+ package net.minecraft.src;
+ 
++import com.amee.minecraft.CarbonCounter;
++
+ public class TileEntityFurnace extends TileEntity implements ISidedInventory {
+    private static final int[] field_102010_d = new int[]{0};
+    private static final int[] field_102011_e = new int[]{2, 1};
+@@ -143,6 +145,7 @@ public class TileEntityFurnace extends TileEntity implements ISidedInventory {
+                var2 = true;
+                if(this.furnaceItemStacks[1] != null) {
+                   --this.furnaceItemStacks[1].stackSize;
++                  CarbonCounter.releaseFromItem(furnaceItemStacks[1].getItem());
+                   if(this.furnaceItemStacks[1].stackSize == 0) {
+                      Item var3 = this.furnaceItemStacks[1].getItem().getContainerItem();
+                      this.furnaceItemStacks[1] = var3 != null?new ItemStack(var3):null;
+diff --git a/minecraft/net/minecraft/src/WorldGenBigTree.java b/minecraft/net/minecraft/src/WorldGenBigTree.java
+index 5b37083..073dfe0 100644
+--- a/minecraft/net/minecraft/src/WorldGenBigTree.java
++++ b/minecraft/net/minecraft/src/WorldGenBigTree.java
+@@ -1,6 +1,7 @@
+ package net.minecraft.src;
+ 
+ import java.util.Random;
++import com.amee.minecraft.CarbonCounter;
+ 
+ public class WorldGenBigTree extends WorldGenerator {
+    static final byte[] otherCoordPairs = new byte[]{(byte)2, (byte)0, (byte)0, (byte)1, (byte)2, (byte)1};
+@@ -148,6 +149,8 @@ public class WorldGenBigTree extends WorldGenerator {
+ 
+       for(int var5 = par2 + this.leafDistanceLimit; var4 < var5; ++var4) {
+          float var6 = this.leafSize(var4 - par2);
++         if (doBlockNotify)
++            CarbonCounter.absorbIntoBlock(Block.leaves.blockID);
+          this.genTreeLayer(par1, var4, par3, var6, (byte)1, Block.leaves.blockID);
+       }
+    }
+@@ -194,7 +197,8 @@ public class WorldGenBigTree extends WorldGenerator {
+                   var17 = 8;
+                }
+             }
+-
++            if (doBlockNotify)
++               CarbonCounter.absorbIntoBlock(Block.wood.blockID);
+             this.setBlockAndMetadata(this.worldObj, var14[0], var14[1], var14[2], par3, var17);
+          }
+       }
+diff --git a/minecraft/net/minecraft/src/WorldGenForest.java b/minecraft/net/minecraft/src/WorldGenForest.java
+index 3bb1dcc..59183d9 100644
+--- a/minecraft/net/minecraft/src/WorldGenForest.java
++++ b/minecraft/net/minecraft/src/WorldGenForest.java
+@@ -1,6 +1,7 @@
+ package net.minecraft.src;
+ 
+ import java.util.Random;
++import com.amee.minecraft.CarbonCounter;
+ 
+ public class WorldGenForest extends WorldGenerator {
+    public WorldGenForest(boolean par1) {
+@@ -59,6 +60,8 @@ public class WorldGenForest extends WorldGenerator {
+                         if(Math.abs(var13) != var11 || Math.abs(var15) != var11 || par2Random.nextInt(2) != 0 && var10 != 0) {
+                            int var16 = par1World.getBlockId(var12, var17, var14);
+                            if(var16 == 0 || var16 == Block.leaves.blockID) {
++                              if (doBlockNotify)
++                                 CarbonCounter.absorbIntoBlock(Block.leaves.blockID);
+                               this.setBlockAndMetadata(par1World, var12, var17, var14, Block.leaves.blockID, 2);
+                            }
+                         }
+@@ -69,6 +72,8 @@ public class WorldGenForest extends WorldGenerator {
+                for(var17 = 0; var17 < var6; ++var17) {
+                   var10 = par1World.getBlockId(par3, par4 + var17, par5);
+                   if(var10 == 0 || var10 == Block.leaves.blockID) {
++                     if (doBlockNotify)
++                        CarbonCounter.absorbIntoBlock(Block.wood.blockID);
+                      this.setBlockAndMetadata(par1World, par3, par4 + var17, par5, Block.wood.blockID, 2);
+                   }
+                }
+diff --git a/minecraft/net/minecraft/src/WorldGenTaiga2.java b/minecraft/net/minecraft/src/WorldGenTaiga2.java
+index 62da783..23004be 100644
+--- a/minecraft/net/minecraft/src/WorldGenTaiga2.java
++++ b/minecraft/net/minecraft/src/WorldGenTaiga2.java
+@@ -61,6 +61,8 @@ public class WorldGenTaiga2 extends WorldGenerator {
+                      for(int var19 = par5 - var21; var19 <= par5 + var21; ++var19) {
+                         int var20 = var19 - par5;
+                         if((Math.abs(var18) != var21 || Math.abs(var20) != var21 || var21 <= 0) && !Block.opaqueCubeLookup[par1World.getBlockId(var17, var16, var19)]) {
++                           if (doBlockNotify)
++                              CarbonCounter.absorbIntoBlock(Block.leaves.blockID);
+                            this.setBlockAndMetadata(par1World, var17, var16, var19, Block.leaves.blockID, 1);
+                         }
+                      }
+@@ -83,6 +85,8 @@ public class WorldGenTaiga2 extends WorldGenerator {
+                for(var16 = 0; var16 < var6 - var15; ++var16) {
+                   var17 = par1World.getBlockId(par3, par4 + var16, par5);
+                   if(var17 == 0 || var17 == Block.leaves.blockID) {
++                     if (doBlockNotify)
++                        CarbonCounter.absorbIntoBlock(Block.wood.blockID);
+                      this.setBlockAndMetadata(par1World, par3, par4 + var16, par5, Block.wood.blockID, 1);
+                   }
+                }
+diff --git a/minecraft/net/minecraft/src/WorldGenTrees.java b/minecraft/net/minecraft/src/WorldGenTrees.java
+index 30e82a3..f7bf4be 100644
+--- a/minecraft/net/minecraft/src/WorldGenTrees.java
++++ b/minecraft/net/minecraft/src/WorldGenTrees.java
+@@ -1,6 +1,7 @@
+ package net.minecraft.src;
+ 
+ import java.util.Random;
++import com.amee.minecraft.CarbonCounter;
+ 
+ public class WorldGenTrees extends WorldGenerator {
+    private final int minTreeHeight;
+@@ -76,6 +77,8 @@ public class WorldGenTrees extends WorldGenerator {
+                         if(Math.abs(var15) != var13 || Math.abs(var17) != var13 || par2Random.nextInt(2) != 0 && var12 != 0) {
+                            int var18 = par1World.getBlockId(var14, var11, var16);
+                            if(var18 == 0 || var18 == Block.leaves.blockID) {
++                              if (doBlockNotify)
++                                 CarbonCounter.absorbIntoBlock(Block.leaves.blockID);
+                               this.setBlockAndMetadata(par1World, var14, var11, var16, Block.leaves.blockID, this.metaLeaves);
+                            }
+                         }
+@@ -86,6 +89,8 @@ public class WorldGenTrees extends WorldGenerator {
+                for(var11 = 0; var11 < var6; ++var11) {
+                   var12 = par1World.getBlockId(par3, par4 + var11, par5);
+                   if(var12 == 0 || var12 == Block.leaves.blockID) {
++                     if (doBlockNotify)
++                        CarbonCounter.absorbIntoBlock(Block.wood.blockID);               
+                      this.setBlockAndMetadata(par1World, par3, par4 + var11, par5, Block.wood.blockID, this.metaWood);
+                      if(this.vinesGrow && var11 > 0) {
+                         if(par2Random.nextInt(3) > 0 && par1World.isAirBlock(par3 - 1, par4 + var11, par5)) {
+diff --git a/minecraft/net/minecraft/src/WorldGenerator.java b/minecraft/net/minecraft/src/WorldGenerator.java
+index cbaf3db..161aa73 100644
+--- a/minecraft/net/minecraft/src/WorldGenerator.java
++++ b/minecraft/net/minecraft/src/WorldGenerator.java
+@@ -3,7 +3,7 @@ package net.minecraft.src;
+ import java.util.Random;
+ 
+ public abstract class WorldGenerator {
+-   private final boolean doBlockNotify;
++   protected final boolean doBlockNotify;
+ 
+    public WorldGenerator() {
+       this.doBlockNotify = false;
+diff --git a/minecraft/net/minecraft/src/WorldProvider.java b/minecraft/net/minecraft/src/WorldProvider.java
+index b844e4a..3dde35e 100644
+--- a/minecraft/net/minecraft/src/WorldProvider.java
++++ b/minecraft/net/minecraft/src/WorldProvider.java
+@@ -1,4 +1,5 @@
+ package net.minecraft.src;
++import com.amee.minecraft.Atmosphere;
+ 
+ public abstract class WorldProvider {
+    public World worldObj;
+@@ -105,6 +106,10 @@ public abstract class WorldProvider {
+       var4 *= var3 * 0.94F + 0.06F;
+       var5 *= var3 * 0.94F + 0.06F;
+       var6 *= var3 * 0.91F + 0.09F;
++      float fogColourScale = Atmosphere.fogColourScale();
++      var4 *= fogColourScale;
++      var5 *= fogColourScale;
++      var6 *= fogColourScale;
+       return this.worldObj.getWorldVec3Pool().getVecFromPool((double)var4, (double)var5, (double)var6);
+    }
+ 
+@@ -117,7 +122,7 @@ public abstract class WorldProvider {
+    }
+ 
+    public float getCloudHeight() {
+-      return 128.0F;
++     return 128.0F + Atmosphere.cloudHeightOffset();
+    }
+ 
+    public boolean isSkyColored() {
