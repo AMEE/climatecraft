@@ -2,7 +2,7 @@
 <project name="climatecraft" basedir=".">
 
     <target name="setup" description="Set up all requirements">
-        <unzip src="mcp50.zip" dest="mcp"/>
+        <unzip src="mcp744.zip" dest="mcp"/>
         <chmod perm="a+x">
           <fileset dir="mcp">
             <include name="**/*.sh"/>
