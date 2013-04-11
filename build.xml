@@ -1,79 +1,45 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <project name="climatecraft" basedir=".">
-
-    <target name="setup" description="Set up all requirements">
-        <unzip src="mcp744.zip" dest="mcp"/>
-        <chmod perm="a+x">
-          <fileset dir="mcp">
-            <include name="**/*.sh"/>
-          </fileset>
-        </chmod>
-        <exec executable="sh" dir="mcp">
-          <arg value="updatemcp.sh"/>
-          <arg value="-f"/>
-        </exec>
-        <copy todir="mcp/jars/bin">
-            <fileset dir="${user.home}/Library/Application Support/minecraft/bin"/>
-        </copy>
-        <copy todir="mcp/jars/resources">
-            <fileset dir="${user.home}/Library/Application Support/minecraft/resources"/>
-        </copy>
-        <get src="https://s3.amazonaws.com/MinecraftDownload/launcher/minecraft_server.jar" dest="mcp/jars"/>
-        <exec executable="sh" dir="mcp">
-          <arg value="decompile.sh"/>
-        </exec>
-        <exec executable="git" dir="mcp/src">
-          <arg value="init"/>
-          <arg value="."/>
-        </exec>
-        <exec executable="git" dir="mcp/src">
-          <arg value="add"/>
-          <arg value="-A"/>
-        </exec>
-        <exec executable="git" dir="mcp/src">
-          <arg value="commit"/>
-          <arg value="-m"/>
-          <arg value="'mojang sources'"/>
-        </exec>
-        <symlink link="mcp/lib/AMEEJavaClient.1.6.jar" resource="../../lib/AMEEJavaClient.1.6.jar" failonerror="false"/>      
-        <get src="https://raw.github.com/AMEE/amee-lib-java/stable/libs/commons-logging/commons-logging.jar" dest="mcp/lib"/>
-        <get src="https://raw.github.com/AMEE/amee-lib-java/stable/libs/commons-codec/commons-codec.jar" dest="mcp/lib"/>
-        <get src="https://raw.github.com/AMEE/amee-lib-java/stable/libs/commons-httpclient/commons-httpclient.jar" dest="mcp/lib"/>
-        <get src="https://raw.github.com/AMEE/amee-lib-java/stable/libs/joda-time-1.6.jar" dest="mcp/lib"/>
-        <get src="https://raw.github.com/AMEE/amee-lib-java/stable/libs/json/org.json.jar" dest="mcp/lib"/>
-        <copy todir="mcp/jars" file="src/amee.properties"/>
-        <echo message="Please add your AMEE credentials to mcp/jars/amee.properties."/>
-    </target>
-
-    <target name="patch" description="Apply patches to MCP source">
-      <mkdir dir="mcp/src/minecraft/com"/>
-      <symlink link="mcp/src/minecraft/com/amee" resource="../../../../src/com/amee" failonerror="false"/>
-      <patch patchfile="src/mcp.patch" strip='1' dir='mcp/src'/>
-    </target>
-
-    <target name="generate_patch" description="Generate patch from MCP source">
-      <exec executable="git" dir="mcp/src" output='src/mcp.patch'>
-        <arg value="diff"/>
-        <arg value="-u"/>
-      </exec>
-    </target>
-
-    <target name="build" description="Build code">
-        <exec executable="sh" dir="mcp">
-          <arg value="recompile.sh"/>
-        </exec>
-    </target>
-
-    <target name="runclient" description="Run client">
-        <exec executable="sh" dir="mcp">
-          <arg value="startclient.sh"/>
-        </exec>
-    </target>
-
-    <target name="runserver" description="Run client">
-        <exec executable="sh" dir="mcp">
-          <arg value="startserver.sh"/>
-        </exec>
-    </target>
-
+  <property name="pluginname" value="ClimateCraft"/>
+  <property name="plugins" location="./test/plugins/"/>
+  
+  <property name="src" location="src"/>
+  <property name="lib" location="lib"/>
+  <property name="bin" location="bin"/>
+  <property name="dist" location="dist"/>
+  
+  <target name="init">
+    <mkdir dir="${bin}"/>
+  </target>
+  
+  <target name="compile" depends="init">
+    <javac srcdir="${src}" destdir="${bin}" includeantruntime="false">
+      <classpath>
+        <fileset dir="${lib}">
+          <include name="**/*.jar"/>
+        </fileset>
+      </classpath>
+    </javac>
+  </target>
+  
+  <target name="dist" depends="compile">
+    <mkdir dir="${dist}"/>
+    <jar jarfile="${dist}/${pluginname}.jar">
+      <fileset dir="${bin}"/>
+      <fileset file="./plugin.yml"/>
+      <zipgroupfileset dir="${lib}">
+        <include name="**/*.jar"/>
+      </zipgroupfileset>
+    </jar>
+  </target>
+  
+  <target name="deploy" depends="dist">
+    <copy file="${dist}/${pluginname}.jar" todir="${plugins}"/>
+  </target>
+  
+  <target name="clean">
+    <delete dir="${bin}"/>
+    <delete dir="${dist}"/>
+  </target>
+  
 </project>
