@@ -5,5 +5,10 @@ commands:
    co2:
       description: Print the current amount of co2 in the atmosphere.
       usage: /co2
-      permission: climatecraft.basic
+      permission: climatecraft.query
       permission-message: You don't have permission for this.
+permissions:
+    climatecraft.*:
+        description: Gives access to all climatecraft commands
+        children:
+            climatecraft.query: true
