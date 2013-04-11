@@ -12,7 +12,7 @@ import java.util.Properties;
 
 import net.minecraft.src.Block;
 import net.minecraft.src.Entity;
-import net.minecraft.src.GuiIngame;
+import net.minecraft.src.EntityPlayer;
 import net.minecraft.src.Item;
 
 import com.amee.client.AmeeException;
@@ -27,9 +27,9 @@ public class CarbonCounter {
 
 	private static HashMap<String,Calculation> calculations = new HashMap<String,Calculation>(); 
 
-	private static GuiIngame ui;
+	private static EntityPlayer player;
 
-	public static void init(GuiIngame _ui)
+	public static void init(EntityPlayer _player)
 	{
 		// Create mappings
 		calculations.put("coal", new Calculation("coal", 
@@ -138,7 +138,7 @@ public class CarbonCounter {
 			Arrays.asList("energyUsed", "1.0", "energyUsedUnit", "kWh"))
 			);
 		// Initialise members
-		ui = _ui;
+		player = _player;
 		Atmosphere.init();
 		// Connect to AMEE
 		Properties configFile = new Properties();
@@ -198,7 +198,7 @@ public class CarbonCounter {
 	{
 		// Get item
 		Calculation calculation = null;
-		String name = item.getItemName();
+		String name = item.getUnlocalizedName();
 		if 		(name.equals("item.stick")) 	calculation = calculations.get("stick");
 		else if (name.equals("tile.sapling")) 	calculation = calculations.get("leaf");
 		else if (name.equals("tile.log")) 		calculation = calculations.get("wood");
@@ -211,7 +211,7 @@ public class CarbonCounter {
 		}
 		else 
 		{
-			ui.addChatMessage("unknown item: " + name);
+			player.addChatMessage("unknown item: " + name);
 		}
 	}
 
