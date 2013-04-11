@@ -1,3 +1,9 @@
 name: ClimateCraft
 main: com.amee.climatecraft.ClimateCraft
 version: 0.3.0
+commands:
+   co2:
+      description: Print the current amount of co2 in the atmosphere.
+      usage: /co2
+      permission: climatecraft.basic
+      permission-message: You don't have permission for this.
