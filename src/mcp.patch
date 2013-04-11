@@ -1,3 +1,24 @@
+diff --git a/minecraft/net/minecraft/client/Minecraft.java b/minecraft/net/minecraft/client/Minecraft.java
+index 1f0b017..f082070 100644
+--- a/minecraft/net/minecraft/client/Minecraft.java
++++ b/minecraft/net/minecraft/client/Minecraft.java
+@@ -127,6 +127,7 @@ import org.lwjgl.opengl.GL20;
+ import org.lwjgl.opengl.GLContext;
+ import org.lwjgl.opengl.PixelFormat;
+ import org.lwjgl.util.glu.GLU;
++import com.amee.minecraft.CarbonCounter;
+ 
+ public abstract class Minecraft implements Runnable, IPlayerUsage {
+    public static byte[] memoryReserve = new byte[10485760];
+@@ -1393,6 +1394,8 @@ public abstract class Minecraft implements Runnable, IPlayerUsage {
+       this.integratedServerIsRunning = true;
+       this.loadingScreen.displayProgressMessage(StatCollector.translateToLocal("menu.loadingLevel"));
+ 
++      CarbonCounter.init(thePlayer);
++
+       while(!this.theIntegratedServer.serverIsInRunLoop()) {
+          String var6 = this.theIntegratedServer.getUserMessage();
+          if(var6 != null) {
 diff --git a/minecraft/net/minecraft/src/BlockDispenser.java b/minecraft/net/minecraft/src/BlockDispenser.java
 index 7dfba99..fe286a0 100644
 --- a/minecraft/net/minecraft/src/BlockDispenser.java
@@ -92,7 +113,7 @@ index fcc9979..c9c4b67 100644
        }
     }
 diff --git a/minecraft/net/minecraft/src/Entity.java b/minecraft/net/minecraft/src/Entity.java
-index 249eb03..89d12f9 100644
+index 249eb03..1608100 100644
 --- a/minecraft/net/minecraft/src/Entity.java
 +++ b/minecraft/net/minecraft/src/Entity.java
 @@ -54,7 +54,7 @@ public abstract class Entity {
@@ -104,6 +125,15 @@ index 249eb03..89d12f9 100644
     protected boolean inWater;
     public int hurtResistantTime;
     private boolean firstUpdate;
+@@ -1029,7 +1029,7 @@ public abstract class Entity {
+       }
+    }
+ 
+-   protected final String getEntityString() {
++   public final String getEntityString() {
+       return EntityList.getEntityString(this);
+    }
+ 
 diff --git a/minecraft/net/minecraft/src/EntityCreeper.java b/minecraft/net/minecraft/src/EntityCreeper.java
 index 7195935..66c243d 100644
 --- a/minecraft/net/minecraft/src/EntityCreeper.java
@@ -126,10 +156,18 @@ index 7195935..66c243d 100644
              }
           }
 diff --git a/minecraft/net/minecraft/src/EntityLiving.java b/minecraft/net/minecraft/src/EntityLiving.java
-index a034641..d0dc137 100644
+index a034641..19aa981 100644
 --- a/minecraft/net/minecraft/src/EntityLiving.java
 +++ b/minecraft/net/minecraft/src/EntityLiving.java
-@@ -402,6 +402,8 @@ public abstract class EntityLiving extends Entity {
+@@ -5,6 +5,7 @@ import java.util.HashMap;
+ import java.util.Iterator;
+ import java.util.List;
+ import java.util.Random;
++import com.amee.minecraft.CarbonCounter;
+ 
+ public abstract class EntityLiving extends Entity {
+    private static final float[] enchantmentProbability = new float[]{0.0F, 0.0F, 0.1F, 0.2F};
+@@ -402,6 +403,8 @@ public abstract class EntityLiving extends Entity {
              }
           }
  
@@ -243,10 +281,18 @@ index 3bb1dcc..59183d9 100644
                    }
                 }
 diff --git a/minecraft/net/minecraft/src/WorldGenTaiga2.java b/minecraft/net/minecraft/src/WorldGenTaiga2.java
-index 62da783..23004be 100644
+index 62da783..e16ad14 100644
 --- a/minecraft/net/minecraft/src/WorldGenTaiga2.java
 +++ b/minecraft/net/minecraft/src/WorldGenTaiga2.java
-@@ -61,6 +61,8 @@ public class WorldGenTaiga2 extends WorldGenerator {
+@@ -1,6 +1,7 @@
+ package net.minecraft.src;
+ 
+ import java.util.Random;
++import com.amee.minecraft.CarbonCounter;
+ 
+ public class WorldGenTaiga2 extends WorldGenerator {
+    public WorldGenTaiga2(boolean par1) {
+@@ -61,6 +62,8 @@ public class WorldGenTaiga2 extends WorldGenerator {
                       for(int var19 = par5 - var21; var19 <= par5 + var21; ++var19) {
                          int var20 = var19 - par5;
                          if((Math.abs(var18) != var21 || Math.abs(var20) != var21 || var21 <= 0) && !Block.opaqueCubeLookup[par1World.getBlockId(var17, var16, var19)]) {
@@ -255,7 +301,7 @@ index 62da783..23004be 100644
                             this.setBlockAndMetadata(par1World, var17, var16, var19, Block.leaves.blockID, 1);
                          }
                       }
-@@ -83,6 +85,8 @@ public class WorldGenTaiga2 extends WorldGenerator {
+@@ -83,6 +86,8 @@ public class WorldGenTaiga2 extends WorldGenerator {
                 for(var16 = 0; var16 < var6 - var15; ++var16) {
                    var17 = par1World.getBlockId(par3, par4 + var16, par5);
                    if(var17 == 0 || var17 == Block.leaves.blockID) {
