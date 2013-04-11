@@ -11,6 +11,7 @@
         </chmod>
         <exec executable="sh" dir="mcp">
           <arg value="updatemcp.sh"/>
+          <arg value="-f"/>
         </exec>
         <copy todir="mcp/jars/bin">
             <fileset dir="${user.home}/Library/Application Support/minecraft/bin"/>
