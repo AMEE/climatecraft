@@ -6,7 +6,6 @@
         <chmod perm="a+x">
           <fileset dir="mcp">
             <include name="**/*.sh"/>
-            <include name="runtime/bin/jad-osx"/>
           </fileset>
         </chmod>
         <exec executable="sh" dir="mcp">
