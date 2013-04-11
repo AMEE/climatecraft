@@ -199,6 +199,18 @@ index 76ed758..9127d7b 100644
        }
  
        if(this.recordPlayingUpFor > 0) {
+diff --git a/minecraft/net/minecraft/src/RenderBlocks.java b/minecraft/net/minecraft/src/RenderBlocks.java
+index 31761cb..4f63b72 100644
+--- a/minecraft/net/minecraft/src/RenderBlocks.java
++++ b/minecraft/net/minecraft/src/RenderBlocks.java
+@@ -3908,6 +3908,7 @@ public class RenderBlocks {
+    }
+ 
+    public boolean func_102027_b(Block param1, int param2, int param3, int param4, float param5, float param6, float param7) {
++     return false;
+    }
+ 
+    private int getAoBrightness(int par1, int par2, int par3, int par4) {
 diff --git a/minecraft/net/minecraft/src/TileEntityFurnace.java b/minecraft/net/minecraft/src/TileEntityFurnace.java
 index 88d3fd0..bd71f24 100644
 --- a/minecraft/net/minecraft/src/TileEntityFurnace.java
