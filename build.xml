@@ -34,11 +34,18 @@
         <echo message="If you wish to develop the code, we recommend that you create a git repository under mcp/src at this point and add the sources to it."/>
     </target>
 
-    <target name="patch" description="Apply patches from mod source">
+    <target name="patch" description="Apply patches to MCP source">
       <patch patchfile="src/conf.patch" originalfile='mcp/conf/mcp.cfg'/>
       <mkdir dir="mcp/src/minecraft/com"/>
       <symlink link="mcp/src/minecraft/com/amee" resource="../../../../src/com/amee" failonerror="false"/>
       <patch patchfile="src/mcp.patch" strip='1' dir='mcp/src'/>
+    </target>
+
+    <target name="generate_patch" description="Generate patch from MCP source">
+      <exec executable="git" dir="mcp/src" output='src/mcp.patch'>
+        <arg value="diff"/>
+        <arg value="-u"/>
+      </exec>
     </target>
 
     <target name="build" description="Build code">
