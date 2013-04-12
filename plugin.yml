@@ -12,3 +12,6 @@ permissions:
         description: Gives access to all climatecraft commands
         children:
             climatecraft.query: true
+    climatecraft.query:
+        description: Allow querying the co2 level
+        default: true
