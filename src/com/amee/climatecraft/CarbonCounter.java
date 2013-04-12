@@ -8,6 +8,7 @@ import java.util.Properties;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBurnEvent;
+import org.bukkit.event.block.BlockGrowEvent;
 import org.bukkit.event.block.BlockDispenseEvent;
 import org.bukkit.event.block.BlockPistonExtendEvent;
 import org.bukkit.event.block.BlockPistonRetractEvent;
@@ -17,7 +18,9 @@ import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 import org.bukkit.event.entity.EntityExplodeEvent;
-
+import org.bukkit.event.world.StructureGrowEvent;
+import org.bukkit.block.BlockState;
+  
 import com.amee.client.AmeeException;
 import com.amee.client.service.*;
 import com.amee.client.model.profile.*;
@@ -145,22 +148,6 @@ public class CarbonCounter implements Listener {
 		return profile;
 	}
 
-	// Trees can absorb carbon when they grow
-	public static void absorbIntoBlock(Integer blockID) 
-	{
-		// Get item
-		Calculation calculation = null;
-//		if 		(blockID == Block.wood.blockID) 	calculation = calculations.get("wood-");
-//		else if (blockID == Block.leaves.blockID) 	calculation = calculations.get("leaf-");
-//		else if (blockID == Block.cactus.blockID) 	calculation = calculations.get("cactus-");
-//		else if (blockID == Block.crops.blockID) 	calculation = calculations.get("crops-");
-		// Do it
-		if (calculation != null) 
-		{
-			calculation.calculate();
-		}
-	}
-
   private void emit(String calculationName) {
     Calculation calc = calculations.get(calculationName);
     if (calc != null)
@@ -252,6 +239,28 @@ public class CarbonCounter implements Listener {
       case CREEPER:
         emit("creeper"); break;
     }
+  }
+
+	@EventHandler
+  public void onBlockGrow(BlockGrowEvent event) {
+    switch (event.getBlock().getType()) {
+      case CACTUS:
+        absorb("cactus"); break;
+      case WHEAT:
+        absorb("crops"); break;
+    }
+  }
+
+	@EventHandler
+  public void onStructureGrow(StructureGrowEvent event) {
+    for (BlockState block : event.getBlocks()) {
+      switch (block.getType()) {
+        case LEAVES:
+          absorb("leaf"); break;
+        case LOG:
+          absorb("wood"); break;
+      }
+  	}
   }
 
 }
