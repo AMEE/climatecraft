@@ -1,4 +1,4 @@
-package com.amee.minecraft;
+package com.amee.climatecraft;
 
 import java.text.DecimalFormat;
 
@@ -10,6 +10,22 @@ public class Atmosphere {
 	public static void init() {
 		total = 0.0f;
 		pollutionRatio = 0.0f;
+	}
+
+	public static void setTotal(float value)
+	{
+		total = value;
+		updatePollutionRatio();
+	}
+
+	public static float getTotal()
+	{
+		return total;
+	}
+
+	public static float getPollutionRatio()
+	{
+		return pollutionRatio;
 	}
 
 	public static void addToTotal(float value)

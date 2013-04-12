@@ -4,3 +4,6 @@
 First open source release
 Ant build/setup system
 Works with Minecraft client 1.0.0
+
+== 0.1.0
+Updated for Minecraft 1.5.1

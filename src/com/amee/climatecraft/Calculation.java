@@ -1,4 +1,4 @@
-package com.amee.minecraft;
+package com.amee.climatecraft;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -78,9 +78,9 @@ public class Calculation {
 				// Get category
 				AmeeProfileItem profileItem = profileCategory().addProfileItem(dataItem().getUid(), values);
 				cachedResult = new Float(profileItem.getAmount().floatValue()); 
-			} catch (AmeeException e) {
-				throw new RuntimeException("Problem creating profile item!");
-			}		
+      } catch (AmeeException e) {
+        throw new RuntimeException("Problem creating profile item! " + e.getMessage());
+      }		
 		}
 		Atmosphere.addToTotal(cachedResult);
 	}

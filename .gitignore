@@ -1,3 +1,7 @@
 mcp/
 .DS_Store
-mcp50.zip
+mcp*.zip
+dist
+bin
+bukkit-*.jar
+test
