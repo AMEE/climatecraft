@@ -201,35 +201,41 @@ public class CarbonCounter implements Listener {
 		}
 	}
 
+  private void calculate(String calculationName) {
+    calc = calculations.get(calculationName);
+    if (calc)
+      calc.calculate();
+  }
+
 	@EventHandler
   public void onBlockBurn(BlockBurnEvent event) {
     switch (event.getBlock().getType()) {
       case WOOD:
-        calculations.get("wood").calculate(); break;
+        calculate("wood"); break;
       case LEAVES:
-        calculations.get("leaf").calculate(); break;
+        calculate("leaf"); break;
       case CACTUS:
-        calculations.get("cactus").calculate(); break;
+        calculate("cactus"); break;
     }
   }	
 
 	@EventHandler
   public void onBlockDispense(BlockDispenseEvent event) {
-    calculations.get("dispenser").calculate();
+    calculate("dispenser");
   }	
 
 	@EventHandler
   public void onNotePlay(NotePlayEvent event) {
-    calculations.get("note").calculate();
+    calculate("note");
   }	
 
 	@EventHandler
   public void onBlockPistonExtend(BlockPistonExtendEvent event) {
-    calculations.get("piston").calculate();
+    calculate("piston");
   }	
 
 	@EventHandler
   public void onBlockPistonRetract(BlockPistonRetractEvent event) {
-    calculations.get("piston").calculate();
-  }	
+    calculate("piston");
+  }
 }
