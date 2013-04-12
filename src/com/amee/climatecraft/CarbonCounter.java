@@ -210,12 +210,14 @@ public class CarbonCounter implements Listener {
 	@EventHandler
   public void onBlockBurn(BlockBurnEvent event) {
     switch (event.getBlock().getType()) {
-      case WOOD:
+      case LOG:
         calculate("wood"); break;
       case LEAVES:
         calculate("leaf"); break;
       case CACTUS:
         calculate("cactus"); break;
+      case WOOD:
+        calculate("plank"); break;
     }
   }	
 
