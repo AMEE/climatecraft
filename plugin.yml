@@ -6,12 +6,21 @@ commands:
       description: Print the current amount of co2 in the atmosphere.
       usage: /co2
       permission: climatecraft.query
-      permission-message: You don't have permission for this.
+      permission-message: You don't have permission to get the co2 level.
+   setco2:
+      description: Set the current amount of co2 in the atmosphere.
+      usage: /setco2 [number]
+      permission: climatecraft.set
+      permission-message: You don't have permission to set the co2 level.
 permissions:
     climatecraft.*:
         description: Gives access to all climatecraft commands
         children:
             climatecraft.query: true
+            climatecraft.set: true
     climatecraft.query:
         description: Allow querying the co2 level
         default: true
+    climatecraft.set:
+        description: Allow setting the co2 level
+        default: false

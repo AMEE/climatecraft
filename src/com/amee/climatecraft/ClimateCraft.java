@@ -27,6 +27,13 @@ public class ClimateCraft extends JavaPlugin {
 			sender.sendMessage(Atmosphere.totalAsString());
 			return true;
 		}
+		else if(cmd.getName().equalsIgnoreCase("setco2")){
+			Float value = Float.parseFloat(args[0]);
+      if (value != null)
+        Atmosphere.setTotal(value);
+      sender.sendMessage(Atmosphere.totalAsString());
+			return true;
+		}
 		return false; 
 	}
 

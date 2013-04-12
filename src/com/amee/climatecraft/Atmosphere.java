@@ -12,6 +12,12 @@ public class Atmosphere {
 		pollutionRatio = 0.0f;
 	}
 
+	public static void setTotal(float value)
+	{
+		total = value;
+		updatePollutionRatio();
+	}
+
 	public static void addToTotal(float value)
 	{
 		total += value;
