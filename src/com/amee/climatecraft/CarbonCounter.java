@@ -9,11 +9,6 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBurnEvent;
 
-//import net.minecraft.src.Block;
-//import net.minecraft.src.Entity;
-//import net.minecraft.src.EntityPlayer;
-//import net.minecraft.src.Item;
-
 import com.amee.client.AmeeException;
 import com.amee.client.service.*;
 import com.amee.client.model.profile.*;
@@ -23,8 +18,6 @@ public class CarbonCounter implements Listener {
 	private static AmeeProfile profile;
 
 	private static HashMap<String,Calculation> calculations = new HashMap<String,Calculation>(); 
-
-	//private static EntityPlayer player;
 
 	CarbonCounter(String server, String username, String password)
 	{
@@ -158,8 +151,6 @@ public class CarbonCounter implements Listener {
 	{
 		// Get item
 		Calculation calculation = null;
-//		if 		(blockID == Block.wood.blockID) 	  		calculation = calculations.get("wood");
-//		else if (blockID == Block.leaves.blockID) 	  		calculation = calculations.get("leaf");
 //		else if (blockID == Block.pistonBase.blockID) 		calculation = calculations.get("piston");
 //		else if (blockID == Block.pistonStickyBase.blockID) calculation = calculations.get("piston");
 //		else if (blockID == Block.dispenser.blockID)  		calculation = calculations.get("dispenser");
@@ -223,7 +214,14 @@ public class CarbonCounter implements Listener {
 	}
 
 	@EventHandler
-    public void onBlockBurn(BlockBurnEvent event) {
-      calculations.get("wood").calculate();
-    }	
+  public void onBlockBurn(BlockBurnEvent event) {
+    switch (event.getBlock().getType()) {
+      case WOOD:
+        calculations.get("wood").calculate(); break;
+      case LEAVES:
+        calculations.get("leaf").calculate(); break;
+      case CACTUS:
+        calculations.get("cactus").calculate(); break;
+    }
+  }	
 }
