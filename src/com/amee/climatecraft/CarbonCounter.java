@@ -12,6 +12,10 @@ import org.bukkit.event.block.BlockDispenseEvent;
 import org.bukkit.event.block.BlockPistonExtendEvent;
 import org.bukkit.event.block.BlockPistonRetractEvent;
 import org.bukkit.event.block.NotePlayEvent;
+import org.bukkit.event.inventory.FurnaceBurnEvent;
+import org.bukkit.event.entity.EntityDeathEvent;
+import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 
 import com.amee.client.AmeeException;
 import com.amee.client.service.*;
@@ -171,13 +175,13 @@ public class CarbonCounter implements Listener {
 
   private void emit(String calculationName) {
     Calculation calc = calculations.get(calculationName);
-    if (calc)
+    if (calc != null)
       calc.calculate();
   }
 
   private void absorb(String calculationName) {
     Calculation calc = calculations.get(calculationName+'-');
-    if (calc)
+    if (calc != null)
       calc.calculate();
   }
 
@@ -216,7 +220,7 @@ public class CarbonCounter implements Listener {
   }
 
 	@EventHandler
-  public void OnFurnaceBurn(FurnaceBurnEvent event) {
+  public void onFurnaceBurn(FurnaceBurnEvent event) {
     switch (event.getFuel().getType()) {
       case WOOD:
         emit("plank"); break;
