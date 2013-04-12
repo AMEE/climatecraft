@@ -16,6 +16,7 @@ import org.bukkit.event.inventory.FurnaceBurnEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
+import org.bukkit.event.entity.EntityExplodeEvent;
 
 import com.amee.client.AmeeException;
 import com.amee.client.service.*;
@@ -245,5 +246,12 @@ public class CarbonCounter implements Listener {
     }
   }
 
+	@EventHandler
+  public void onEntityExplode(EntityExplodeEvent event) {
+    switch (event.getEntity().getType()) {
+      case CREEPER:
+        emit("creeper"); break;
+    }
+  }
 
 }
