@@ -144,19 +144,6 @@ public class CarbonCounter implements Listener {
 		return profile;
 	}
 
-	// Entities release carbon when they are set on fire
-	public static void releaseFromEntity(/* Entity entity */)
-	{
-		// Get item
-		Calculation calculation = null;
-		calculation = calculations.get("");//entity.getEntityString().toLowerCase());
-		// Do it
-		if (calculation != null) 
-		{
-			calculation.calculate();
-		}
-	}
-
 	// Trees can absorb carbon when they grow
 	public static void absorbIntoBlock(Integer blockID) 
 	{
@@ -234,5 +221,29 @@ public class CarbonCounter implements Listener {
         emit("coal"); break;
     }
   }
+
+	@EventHandler
+  public void onEntityDeath(EntityDeathEvent event) {
+    EntityDamageEvent damageEvent = event.getEntity().getLastDamageCause();
+    if (damageEvent != null && (damageEvent.getCause() == DamageCause.FIRE ||
+                                damageEvent.getCause() == DamageCause.FIRE_TICK ||
+                                damageEvent.getCause() == DamageCause.LAVA )) {
+      switch (event.getEntity().getType()) {
+        case PIG:
+          emit("pig"); break;
+        case COW:
+          emit("cow"); break;
+        case CHICKEN:
+          emit("chicken"); break;
+        case SHEEP:
+          emit("sheep"); break;
+        case CREEPER:
+          emit("creeper"); break;
+        case ZOMBIE:
+          emit("zombie"); break;
+      }    
+    }
+  }
+
 
 }
