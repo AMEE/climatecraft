@@ -14,6 +14,8 @@ public class ClimateCraft extends JavaPlugin {
     String server = getConfig().getString("server");
     String username = getConfig().getString("username");
     String password = getConfig().getString("password");
+    // Register carbon counter listener
+		getServer().getPluginManager().registerEvents(new CarbonCounter(server, username, password), this);
 	}
 	 
 	@Override

@@ -1,14 +1,13 @@
 package com.amee.climatecraft;
 
-import java.math.BigDecimal;
-import java.text.DecimalFormat;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
-import java.util.UUID;
 import java.io.*;
 import java.util.Properties;
+
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
+import org.bukkit.event.block.BlockBurnEvent;
 
 //import net.minecraft.src.Block;
 //import net.minecraft.src.Entity;
@@ -17,11 +16,9 @@ import java.util.Properties;
 
 import com.amee.client.AmeeException;
 import com.amee.client.service.*;
-import com.amee.client.util.Choice;
-import com.amee.client.model.data.*;
 import com.amee.client.model.profile.*;
 
-public class CarbonCounter {
+public class CarbonCounter implements Listener {
 
 	private static AmeeProfile profile;
 
@@ -225,4 +222,8 @@ public class CarbonCounter {
 		}
 	}
 
+	@EventHandler
+    public void onBlockBurn(BlockBurnEvent event) {
+      calculations.get("wood").calculate();
+    }	
 }
