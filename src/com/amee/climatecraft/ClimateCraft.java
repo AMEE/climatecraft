@@ -18,6 +18,8 @@ public class ClimateCraft extends JavaPlugin {
 		getServer().getPluginManager().registerEvents(new CarbonCounter(server, username, password), this);
     // Set co2 value
     Atmosphere.setTotal((float)getConfig().getDouble("co2"));
+    // Setup listener for weather control
+    getServer().getPluginManager().registerEvents(new WeatherController(this), this);
 	}
 	 
 	@Override

@@ -23,6 +23,11 @@ public class Atmosphere {
 		return total;
 	}
 
+	public static float getPollutionRatio()
+	{
+		return pollutionRatio;
+	}
+
 	public static void addToTotal(float value)
 	{
 		total += value;
