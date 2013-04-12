@@ -163,28 +163,6 @@ public class CarbonCounter implements Listener {
 		}
 	}
 
-	// Items release carbon when they burn in furnaces
-	public static void releaseFromItem(/* Item item */)
-	{
-		// Get item
-		Calculation calculation = null;
-		String name = "";//item.getUnlocalizedName();
-		if 		(name.equals("item.stick")) 	calculation = calculations.get("stick");
-		else if (name.equals("tile.sapling")) 	calculation = calculations.get("leaf");
-		else if (name.equals("tile.log")) 		calculation = calculations.get("wood");
-		else if (name.equals("tile.wood")) 		calculation = calculations.get("plank");
-		else if (name.equals("item.coal")) 		calculation = calculations.get("coal");
-		// Do it
-		if (calculation != null) 
-		{
-			calculation.calculate();
-		}
-		else 
-		{
-//			player.addChatMessage("unknown item: " + name);
-		}
-	}
-
 	// Trees can absorb carbon when they grow
 	public static void absorbIntoBlock(Integer blockID) 
 	{
@@ -240,4 +218,21 @@ public class CarbonCounter implements Listener {
   public void onBlockPistonRetract(BlockPistonRetractEvent event) {
     calculate("piston");
   }
+
+	@EventHandler
+  public void OnFurnaceBurn(FurnaceBurnEvent event) {
+    switch (event.getFuel().getType()) {
+      case WOOD:
+        calculate("plank"); break;
+      case SAPLING:
+        calculate("leaf"); break;
+      case LOG:
+        calculate("wood"); break;
+      case STICK:
+        calculate("stick"); break;
+      case COAL:
+        calculate("coal"); break;
+    }
+  }
+
 }
