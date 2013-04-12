@@ -16,10 +16,15 @@ public class ClimateCraft extends JavaPlugin {
     String password = getConfig().getString("password");
     // Register carbon counter listener
 		getServer().getPluginManager().registerEvents(new CarbonCounter(server, username, password), this);
+    // Set co2 value
+    Atmosphere.setTotal((float)getConfig().getDouble("co2"));
 	}
 	 
 	@Override
 	public void onDisable() {
+    // Store co2 value
+    getConfig().set("co2", Atmosphere.getTotal());
+    saveConfig();
 	}
 
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args){

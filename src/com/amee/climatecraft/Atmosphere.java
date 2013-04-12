@@ -18,6 +18,11 @@ public class Atmosphere {
 		updatePollutionRatio();
 	}
 
+	public static float getTotal()
+	{
+		return total;
+	}
+
 	public static void addToTotal(float value)
 	{
 		total += value;
