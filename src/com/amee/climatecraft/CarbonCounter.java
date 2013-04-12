@@ -175,6 +175,12 @@ public class CarbonCounter implements Listener {
       calc.calculate();
   }
 
+  private void absorb(String calculationName) {
+    Calculation calc = calculations.get(calculationName+'-');
+    if (calc)
+      calc.calculate();
+  }
+
 	@EventHandler
   public void onBlockBurn(BlockBurnEvent event) {
     switch (event.getBlock().getType()) {
