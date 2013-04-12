@@ -179,8 +179,8 @@ public class CarbonCounter implements Listener {
 		}
 	}
 
-  private void calculate(String calculationName) {
-    calc = calculations.get(calculationName);
+  private void emit(String calculationName) {
+    Calculation calc = calculations.get(calculationName);
     if (calc)
       calc.calculate();
   }
@@ -189,49 +189,49 @@ public class CarbonCounter implements Listener {
   public void onBlockBurn(BlockBurnEvent event) {
     switch (event.getBlock().getType()) {
       case LOG:
-        calculate("wood"); break;
+        emit("wood"); break;
       case LEAVES:
-        calculate("leaf"); break;
+        emit("leaf"); break;
       case CACTUS:
-        calculate("cactus"); break;
+        emit("cactus"); break;
       case WOOD:
-        calculate("plank"); break;
+        emit("plank"); break;
     }
   }	
 
 	@EventHandler
   public void onBlockDispense(BlockDispenseEvent event) {
-    calculate("dispenser");
+    emit("dispenser");
   }	
 
 	@EventHandler
   public void onNotePlay(NotePlayEvent event) {
-    calculate("note");
+    emit("note");
   }	
 
 	@EventHandler
   public void onBlockPistonExtend(BlockPistonExtendEvent event) {
-    calculate("piston");
+    emit("piston");
   }	
 
 	@EventHandler
   public void onBlockPistonRetract(BlockPistonRetractEvent event) {
-    calculate("piston");
+    emit("piston");
   }
 
 	@EventHandler
   public void OnFurnaceBurn(FurnaceBurnEvent event) {
     switch (event.getFuel().getType()) {
       case WOOD:
-        calculate("plank"); break;
+        emit("plank"); break;
       case SAPLING:
-        calculate("leaf"); break;
+        emit("leaf"); break;
       case LOG:
-        calculate("wood"); break;
+        emit("wood"); break;
       case STICK:
-        calculate("stick"); break;
+        emit("stick"); break;
       case COAL:
-        calculate("coal"); break;
+        emit("coal"); break;
     }
   }
 
