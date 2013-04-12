@@ -8,6 +8,10 @@ import java.util.Properties;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBurnEvent;
+import org.bukkit.event.block.BlockDispenseEvent;
+import org.bukkit.event.block.BlockPistonExtendEvent;
+import org.bukkit.event.block.BlockPistonRetractEvent;
+import org.bukkit.event.block.NotePlayEvent;
 
 import com.amee.client.AmeeException;
 import com.amee.client.service.*;
@@ -146,22 +150,6 @@ public class CarbonCounter implements Listener {
 		return profile;
 	}
 
-	// Blocks release carbon when they are set on fire or powered by redstone
-	public static void releaseFromBlock(Integer blockID)
-	{
-		// Get item
-		Calculation calculation = null;
-//		else if (blockID == Block.pistonBase.blockID) 		calculation = calculations.get("piston");
-//		else if (blockID == Block.pistonStickyBase.blockID) calculation = calculations.get("piston");
-//		else if (blockID == Block.dispenser.blockID)  		calculation = calculations.get("dispenser");
-//		else if (blockID == Block.music.blockID)      		calculation = calculations.get("note");
-		// Do it
-		if (calculation != null) 
-		{
-			calculation.calculate();
-		}
-	}
-
 	// Entities release carbon when they are set on fire
 	public static void releaseFromEntity(/* Entity entity */)
 	{
@@ -223,5 +211,25 @@ public class CarbonCounter implements Listener {
       case CACTUS:
         calculations.get("cactus").calculate(); break;
     }
+  }	
+
+	@EventHandler
+  public void onBlockDispense(BlockDispenseEvent event) {
+    calculations.get("dispenser").calculate();
+  }	
+
+	@EventHandler
+  public void onNotePlay(NotePlayEvent event) {
+    calculations.get("note").calculate();
+  }	
+
+	@EventHandler
+  public void onBlockPistonExtend(BlockPistonExtendEvent event) {
+    calculations.get("piston").calculate();
+  }	
+
+	@EventHandler
+  public void onBlockPistonRetract(BlockPistonRetractEvent event) {
+    calculations.get("piston").calculate();
   }	
 }
