@@ -29,7 +29,7 @@ public class CarbonCounter {
 
 	//private static EntityPlayer player;
 
-	public static void init(/*EntityPlayer _player*/)
+	CarbonCounter(String server, String username, String password)
 	{
 		// Create mappings
 		calculations.put("coal", new Calculation("coal", 
@@ -141,15 +141,9 @@ public class CarbonCounter {
 		//player = _player;
 		Atmosphere.init();
 		// Connect to AMEE
-		Properties configFile = new Properties();
-		try {
-			configFile.load(new FileInputStream("amee.properties"));
-		} catch (java.io.IOException e) {
-			throw new RuntimeException("Couldn't load amee.properties");
-		}
-		AmeeContext.getInstance().setUsername(configFile.getProperty("USERNAME"));
-		AmeeContext.getInstance().setPassword(configFile.getProperty("PASSWORD"));
-		AmeeContext.getInstance().setBaseUrl("http://" + configFile.getProperty("SERVER"));
+		AmeeContext.getInstance().setUsername(username);
+		AmeeContext.getInstance().setPassword(password);
+		AmeeContext.getInstance().setBaseUrl("http://" + server);
 		// Create a profile - later on this will be stored with the world somehow
 		try {
 			profile = AmeeObjectFactory.getInstance().addProfile();

@@ -8,12 +8,16 @@ public class ClimateCraft extends JavaPlugin {
 
 	@Override
 	public void onEnable(){
-		// TODO Insert logic to be performed when the plugin is enabled
+    // Save default configuration file
+    this.saveDefaultConfig();
+    // Load config
+    String server = getConfig().getString("server");
+    String username = getConfig().getString("username");
+    String password = getConfig().getString("password");
 	}
 	 
 	@Override
 	public void onDisable() {
-		// TODO Insert logic to be performed when the plugin is disabled
 	}
 
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args){
